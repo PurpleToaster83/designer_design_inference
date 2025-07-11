@@ -1,0 +1,254 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.flask-emoji {
+    font-size: 1.2em;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(8, 60px);
+    grid-template-rows: repeat(8, 60px);
+    gap: 2px;
+    background: #333;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.grid-cell {
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.grid-cell.target {
+    background: #ffd700;
+    border-color: #ffb347;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.grid-cell.target.occupied {
+    background: #ffb347;
+}
+
+.grid-cell.drop-target {
+    background: #90EE90;
+    border-color: #32CD32;
+    box-shadow: 0 0 15px rgba(50, 205, 50, 0.7);
+    transform: scale(1.05);
+}
+
+.sidebar {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    width: 250px;
+}
+
+.sidebar h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+
+    text-align: center;
+}
+
+.flasks-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.flask {
+    width: 60px;
+    height: 80px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: grab;
+    transition: all 0.3s ease;
+    position: relative;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flask:active {
+    cursor: grabbing;
+    transform: scale(1.1);
+}
+
+.flask.dragging {
+    opacity: 0.7;
+    transform: scale(1.1);
+    z-index: 1000;
+}
+
+.flask.potion {
+    background-image: url('images/potion.png');
+}
+
+.flask.poison {
+    background-image: url('images/poison.png');
+}
+
+.flask.assigned {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.status {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+}
+
+.reset-button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(145deg, #ff6b6b, #ee5a52);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.reset-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.submit-button {
+    width: 100%;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background: linear-gradient(145deg, #20ce34, #2ec63a);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.flask-in-grid.potion {
+    width: 60px;
+    height: 80px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: grab;
+    transition: all 0.3s ease;
+    position: relative;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('images/potion.png');
+    opacity: 0.3;
+}
+
+.flask-in-grid.poison {
+    width: 60px;
+    height: 80px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: grab;
+    transition: all 0.3s ease;
+    position: relative;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('images/poison.png');
+    opacity: 0.3;
+}
+
+.flask-in-grid:hover {
+    transform: scale(1.1);
+}
+
+.instructions {
+    color: white;
+}
+
+.header {
+    justify-content: center;
+}
+
+.paragraph {
+
+}
+
+.caption-image {
+    padding-top: 10px;
+    translate: (0, -20px);
+    width: 30px;
+    height: 30px;
+}
+
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        padding: 10px;
+    }
+    
+    .grid-container {
+        grid-template-columns: repeat(8, 40px);
+        grid-template-rows: repeat(8, 40px);
+    }
+    
+    .sidebar {
+        width: 100%;
+    }
+}
