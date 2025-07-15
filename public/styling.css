@@ -232,7 +232,7 @@ h1 {
 
 .caption-image {
     padding-top: 10px;
-    translate: (0, -20px);
+    transform: translateY(7px);
     width: 30px;
     height: 30px;
 }
