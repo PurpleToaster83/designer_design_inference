@@ -1,4 +1,211 @@
 body {
+  background-color: #FFFFFF;
+  font-family: 'Lato', sans-serif;
+}
+
+.main {
+  width: 82.5%;
+  margin: auto;
+  padding-top: 50px;
+  font-size: 11pt;
+}
+
+.full-row {
+  width: 200%;
+  padding: 15vh 2.5vw 2vh 2.5vw;
+  font-size: 15pt;
+  font-weight: 400;
+  text-align: justify;
+}
+
+.full-row strong {
+  font-weight: 700;
+}
+
+.feedback-full-row {
+  width: 200%;
+  padding: 10pt 0pt;
+  font-size: 14pt;
+  font-weight: 400;
+  text-align: justify;
+}
+
+.feedback-full-row strong {
+  font-weight: 700;
+}
+
+.captions {
+  font-size: 12pt;
+  font-weight: 400;
+  text-align: left;
+}
+
+.captions strong {
+  font-weight: 700;
+}
+
+.caption-image {
+  display: inline;
+  height: 14pt;
+  width: 14pt;
+  vertical-align: text-bottom;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.feedback {
+  font-size: 12pt;
+  text-align: left;
+}
+
+.feedback-score-small {
+  font-size: 9pt;
+  color: #666666;
+}
+
+.stimulus {
+  float: right;
+  width: 80%;
+}
+
+ul.no-bullets {
+  list-style-type: none;
+  margin-top: 0pt;
+  padding-inline-start: 0pt;
+  margin-bottom: 0pt;
+}
+
+ul.no-bullets-horizontal {
+  list-style-type: none;
+  display: flex;
+  margin: 0pt;
+  padding-inline-start: 0pt;
+  justify-content: space-evenly;
+}
+
+ul.no-bullets-full-row {
+  width: 200%;
+  list-style-type: none;
+}
+
+.statement {
+  font-size: 13pt;
+}
+
+.rating-scale{
+  display: flex;
+  margin: 7.5pt 15% 7.5pt 15%;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.rating-button {
+  display: inline-block;
+  text-align: center;
+  flex-basis: 100%;
+}
+
+.rating-button label {
+  display: block;
+  line-height: 1.25;
+}
+
+.rating-number {
+  font-size: 11pt;
+}
+
+.rating-text {
+  font-size: 9pt;
+}
+
+input[type=checkbox],
+input[type=radio] {
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(2);
+  /* IE */
+  -moz-transform: scale(2);
+  /* FF */
+  -webkit-transform: scale(2);
+  /* Safari and Chrome */
+  -o-transform: scale(2);
+  /* Opera */
+  transform: scale(2);
+  /* padding: 20px; */
+  margin: 10px;
+}
+
+.controls {
+  float: right;
+  padding: 10px;
+  clear: both;
+}
+
+.comprehension_question {
+  font-size: 12pt;
+  float: left;
+  padding: 10px;
+}
+
+.section_title {
+  float: right;
+  font-family: "Lato";
+  font-size: 20px;
+  font-weight: bold
+}
+
+.button {
+  background-color: #02a342;
+  border-radius: 6px;
+  border: 1px solid #02a342;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: "Lato";
+  font-size: 14px;
+  padding: 4px 10px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px black;
+  margin-right: 10px;
+}
+
+.button:hover {
+  background-color: #2cb04f;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  background-color: #aaaaaa;
+  border: 1px solid #ffffff;
+}
+
+.button:active {
+  position: relative;
+  top: 1px;
+}
+
+.key-red {
+  font-weight: bold;
+  color: #d41159;
+}
+
+.key-blue {
+  font-weight: bold;
+  color: #0072b2;
+}
+
+.key-none {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.modal {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 20px;
@@ -7,7 +214,7 @@ body {
     display: flex;
     gap: 30px;
     align-items: flex-start;
-}
+} */
 
 .container {
     background: white;
@@ -218,23 +425,24 @@ h1 {
     transform: scale(1.1);
 }
 
-.instructions {
-    color: white;
-}
-
-.header {
-    justify-content: center;
-}
-
-.paragraph {
-
-}
-
 .caption-image {
     padding-top: 10px;
     transform: translateY(7px);
     width: 30px;
     height: 30px;
+}
+
+/* Optional: Add a subtle pattern to walls */
+.grid-cell.wall {
+  background-color: #000000;
+  background-image: 
+    linear-gradient(45deg, #1a1a1a 25%, transparent 25%),
+    linear-gradient(-45deg, #1a1a1a 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #1a1a1a 75%),
+    linear-gradient(-45deg, transparent 75%, #1a1a1a 75%);
+  background-size: 4px 4px;
+  background-position: 0 0, 0 2px, 2px -2px, -2px 0px;
+  border: 2px solid #333333;
 }
 
 @media (max-width: 768px) {

@@ -1,55 +1,148 @@
-<!DOCTYPE html>
-<html lang="en">
+<!Doctype html>
+<html ng-app="experimentApp">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="images/potion_fav.png">
+  <title>Designer Pragmatic Design Inferance</title>
+  <link rel="icon" type="image/x-icon" href="images/potion_fav.png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="styling.css"
 
-    <link rel="stylesheet" href="styling.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-sanitize.js"></script>
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <!-- Initialize Firebase -->
-    <script src="https://dkgbelief.firebaseapp.com/__/firebase/init.js"></script>
-    <!-- Experiment App -->
-    <script src="lib/preloader.js"></script>
-    <!-- <script src="app.js"></script> -->
-
-    <title>Designer Pragmatic Design Inference</title>
+  <!-- AngularJS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-sanitize.js"></script>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <!-- Initialize Firebase -->
+  <script src="https://dkgbelief.firebaseapp.com/__/firebase/init.js"></script>
+  <!-- Experiment App -->
+  <script src="preloader.js"></script>
+  <script src="app.js"></script>
 </head>
-<body>
-    <div class="container">
-        <h1><span class="flask-emoji">🧪</span> Gridworld Flask Assignment</h1>
-        <div class="grid-container" id="grid"></div>
+
+<body ng-controller="ExperimentController" ng-init="set_stimuli()">
+  <div class="main w3-row">
+
+    <!-- Left Side -->
+    <div class="w3-col m5">
+
+      <!-- Instructions -->
+      <div ng-show="section == 'instructions' && instruction_has_text() && !instruction_has_image()" class="full-row"
+        ng-bind-html="instructions[inst_id].text" ng-cloak>
+      </div>
+
+      <!-- Exam Questions-->
+      <ul class="no-bullets-full-row" ng-show="is_exam()" ng-repeat="opt in instructions[inst_id].options" ng-cloak>
+        <li><input type="radio" name="exam" ng-model="exam_response" ng-click="validate_exam(opt)" ng-disabled="is_feedback()" value="{{opt}}">
+          <span class="checkboxtext" ng-bind-html="opt"></span>
+        </li>
+      </ul>
+      <ul class="no-bullets-full-row" ng-show="is_feedback()" ng-repeat="opt in instructions[inst_id].options" ng-cloak>
+        <li><input type="radio" name="exam" ng-model="last_exam_response" ng-disabled="true" value="{{opt}}">
+          <span class="checkboxtext" ng-bind-html="opt"></span>
+        </li>
+      </ul>
+
+      <!-- Exam Feedback-->
+      <p ng-show="is_feedback()" class="feedback-full-row" ng-cloak>
+        <strong ng-show="last_exam_correct == true" style="color:green">Correct. </strong>
+        <strong ng-show="last_exam_correct == false" style="color:red">Incorrect. </strong>
+        The answer is: <strong ng-bind-html="instructions[inst_id].options[instructions[inst_id].answer]"></strong>
+      </p>
+      <p ng-show="is_exam()" class="feedback-full-row"><br></p>
+
+      <!-- Exam Endscreen -->
+      <div ng-show="is_exam_end()" class="full-row" ng-cloak>
+        <span ng-show="exam_score == exam_results.length">
+          Great job, you answered <strong style="color:green">{{exam_score}}/{{exam_results.length}}</strong> questions correctly!<br>
+          <br>
+          Press <strong>Next</strong> to continue.
+        </span>
+        <span ng-show="exam_score < exam_results.length">
+          You answered <strong style="color:red">{{exam_score}}/{{exam_results.length}}</strong> questions correctly.<br>
+          <br>
+          Press <strong>Next</strong> to retake the quiz, and try to answer all questions correctly.
+        </span>
+        <br><br>
+      </div>
+      
+      <!-- Grid -->
+        <div ng-show="inst_id != 0 && inst_id != 3 && inst_id != 4 && !instruction_has_question()" class="grid-container" id="grid" ng-init="initGridContainer()"></div>
+      <p class="section_title" ng-show="section == 'instructions' && instruction_has_image()">Tutorial</p>
+      <div class="section_title" style="float: left;" ng-show="section == 'stimuli' && part_id >= 0" ng-cloak>
+        Round {{stim_id+1}}/{{stimuli_set.length}} </div>
+      <div class="section_title" style="float: left;" ng-show="section == 'stimuli' && part_id < 0" ng-cloak>
+        Round {{stim_id}}/{{stimuli_set.length}} </div>
+
+      <!-- Endscreen -->
+      <p ng-show="section == 'endscreen'" class="full-row" ng-cloak>
+        You're all done!
+        <br><br>
+        Thank you for your time :)
+      </p>
+
+      <!-- Controls -->
+      <div class="controls" ng-cloak>
+        <button class="button" ng-click="advance()" ng-hide="section == 'stimuli' && part_id <= 0"
+          ng-disabled="section == 'endscreen' ||
+            (stimuli_set.length == 0) || && !hide_questions() ||
+            (valid_belief == false && has_belief_question()) && !hide_questions() ||
+            (valid_exam == false && section == 'instructions' && is_exam()) ||
+            (valid_comprehension == false && section == 'instructions' && instruction_has_question())">
+          Next&ensp;▶
+        </button>
+      </div>
+
     </div>
 
-    <div class="sidebar">
+    <!-- Right Side -->
+    <div class="w3-col m6" ng-show="show_rhs" style="margin-left: 5%;">
+
+      <!-- Captioned Instructions -->
+      <div ng-show="section == 'instructions' && instruction_has_image()" class="captions"
+        ng-bind-html="instructions[inst_id].text" ng-cloak>
+      </div>
+
+    <!--TODO: integrate class="sidebar"-->
+    <div ng-show="!hide_questions() && has_belief_question()" id="question" class="captions" ng-cloak>
         <h2>Available Flasks</h2>
         <div class="flasks-container" id="flasks-container">
             <div class="flask potion" draggable="true" data-flask="potion"></div>
             <div class="flask potion" draggable="true" data-flask="potion"></div>
             <div class="flask poison" draggable="true" data-flask="poison"></div>
         </div>
-        
+
         <div class="status" id="status">0/4 squares assigned</div>
-        <button class="reset-button" onClick="resetAssignments()">Reset All</button>
-        <br><br><br>
-        <button class="submit-button" onClick="submitAssignment()">Submit Layout</button>
+            <button class="reset-button" ng-click="resetAssignments()">Reset All</button>
+            <br><br><br>
+            <button class="submit-button" ng-click="submitAssignment()">Submit Layout</button>
+        </div> 
     </div>
 
-    <div class="instructions">
-        <h1 class="instructions header"><u>Game Instructions</u></h1>
-        <p class="instructions paragraph">
-            Welcome to our flask placement game!
-            <br><br><br>
-            The map designer, you, will place an assortment of flasks (purple potions <img class="caption-image" src="images/potion.png"> and green poisons <img class="caption-image" src="images/poison.png">) in the yellow square slots.
-            <br><br><br>
-            Press <strong>Next</strong> to continue.</p>
+      <!-- Comprehension Questions -->
+      <div ng-show="section == 'instructions' && instruction_has_question()" class="comprehension_question" ng-cloak>
+        <p ng-bind-html="instructions[inst_id].question"></p>
+
+        <ul class="no-bullets" ng-repeat="opt in instructions[inst_id].options">
+          <li><input type="radio" name="comprehension" ng-model="comprehension_response" ng-click="validate_answer(opt)"
+              value="{{opt}}"> <span class="checkboxtext" ng-bind-html="opt"></span>
+          </li>
+        </ul>
+        <br>
+
+        <div ng-hide="comprehension_response == ''" class="checkboxtext">
+          <strong ng-show="valid_comprehension" style="color:green">Correct! Hit the Next button to continue.</strong>
+          <strong ng-show="!valid_comprehension" style="color:red">Wrong answer, please try again!</strong>
+        </div>
+      </div>
+
+      <div ng-show="section == 'instructions'" class="comprehension_question">
+        <p ng-bind-html="instructions[inst_id].footnote"></p>
+      </div>
+
     </div>
 
-    <script src="app.js"></script>
+</body>
 
-    </body>
 </html>
