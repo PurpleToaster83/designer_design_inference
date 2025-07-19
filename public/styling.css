@@ -238,13 +238,14 @@ h1 {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(8, 60px);
-    grid-template-rows: repeat(8, 60px);
     gap: 2px;
     background: #333;
     padding: 10px;
     border-radius: 10px;
     margin-bottom: 20px;
+    width: 100%;
+    max-width: 500px; /* or whatever max size you want */
+    aspect-ratio: 1; /* Makes it a perfect square */
 }
 
 .grid-cell {
@@ -432,7 +433,6 @@ h1 {
     height: 30px;
 }
 
-/* Optional: Add a subtle pattern to walls */
 .grid-cell.wall {
   background-color: #000000;
   background-image: 
@@ -443,6 +443,14 @@ h1 {
   background-size: 4px 4px;
   background-position: 0 0, 0 2px, 2px -2px, -2px 0px;
   border: 2px solid #333333;
+}
+
+.grid-cell.monster {
+    background-image: url("images/monster.png");
+}
+
+.grid-cell.player {
+    background-image: url("images/human.png");
 }
 
 @media (max-width: 768px) {

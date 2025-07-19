@@ -56,9 +56,6 @@ experimentApp.controller('ExperimentController',
     $scope.assignments = {}; // Track which flasks are assigned to which squares
     $scope.assignedCount = 0;
 
-    $scope.blah = true;
-
-
     $scope.log = function (...args) {
       if ($location.search().debug == "true") {
         console.log(...args);
@@ -280,6 +277,16 @@ experimentApp.controller('ExperimentController',
       return true
     };
 
+    $scope.has_belief_question = function () {
+      if ($scope.section == "stimuli") {
+        return $scope.part_id > 0
+      } else if ($scope.section == "instructions") {
+        return ($scope.instructions[$scope.inst_id].question_types != null &&
+          $scope.instructions[$scope.inst_id].question_types.includes("beliefs"))
+      }
+      return false
+    };
+
     $scope.cur_stim_image = function () {
       if ($scope.section != "stimuli" || $scope.stim_id < 0) {
         return "images/poison.png"
@@ -361,9 +368,7 @@ experimentApp.controller('ExperimentController',
     };
 
     $scope.stimuli_sets = [
-      [1, 4, 7, 10, 13, 16, 19, 22, 25, 28],
-      [2, 5, 8, 11, 14, 17, 20, 23, 26, 29],
-      [3, 6, 9, 12, 15, 18, 21, 24, 27, 30]
+      [1]
     ]
 
     $scope.stimuli_set_length = $scope.stimuli_sets[0].length;
@@ -529,39 +534,31 @@ experimentApp.controller('ExperimentController',
       $scope.inst_id = $scope.instructions.length - 1;
     }
 
-    $scope.stimuli = [ //TODO: just hits the default
+    $scope.stimuli = [
       {
         "name": "1_1",
         // Grid setup - 8x8 grid with 4 yellow target squares
-        "gridSize": 8,
+        "gridSize": 7,
         "targetSquares": [
-            { row: 1, col: 1 }, // Top-left corner area
-            { row: 1, col: 6 }, // Top-right corner area
-            { row: 6, col: 1 }, // Bottom-left corner area
-            { row: 6, col: 6 }  // Bottom-right corner area
+          { row: 0, col: 1 },
+          { row: 5, col: 0 },
+          { row: 2, col: 3 },
         ],
-        "wallSquares":[
-          {row: 1, col: 3}
+        "wallSquares": [
+          { row: 4, col: 2 },
+          { row: 4, col: 3 },
+          { row: 4, col: 4 },
+          { row: 4, col: 5 },
+          { row: 4, col: 6 }
         ],
-        "images": [
-          "stimuli/segments/M1L1P1.png"
-        ],
-        "times": [
-          1,
-          1
-        ],
-        "statements": [
-          "Flask <strong>A</strong> is: ",
-          "Flask <strong>B</strong> is: ",
-          "Flask <strong>C</strong> is: ",
-          "Flask <strong>D</strong> is: "
-        ],
-        "length": 2
+        "monster": {row: 1, col: 6},
+        "player": { row: 6, col: 6 },
+        "flasks": [true, true, false]
       }
     ]
 
     // Initialize grid
-    $scope.initializeGrid = async function initializeGrid() {
+    $scope.initializeGrid = async function () {
       $scope.grid = document.getElementById('grid');
       $scope.grid.innerHTML = '';
       
@@ -583,6 +580,18 @@ experimentApp.controller('ExperimentController',
           if ($scope.isWall) {
             $scope.cell.classList.add('wall');
           }
+
+          // Check if this cell is a monster
+          $scope.isMonster = $scope.stimuli[$scope.stim_id].monster.row === row && $scope.stimuli[$scope.stim_id].monster.col === col;
+          if ($scope.isMonster) {
+            $scope.cell.classList.add('monster');
+          }
+
+          // Check if this cell is a player
+          $scope.isPlayer = $scope.stimuli[$scope.stim_id].player.row === row && $scope.stimuli[$scope.stim_id].player.col === col;
+          if ($scope.isPlayer) {
+            $scope.cell.classList.add('player');
+          }
               
           // Add drop event listeners
           $scope.cell.addEventListener('dragover', $scope.handleDragOver);
@@ -598,16 +607,16 @@ experimentApp.controller('ExperimentController',
     }
 
     // Function to update grid CSS size
-    $scope.updateGridSize = function() {
+    $scope.updateGridSize = function () {
       $scope.gridContainer = document.getElementById('grid');
-      if (gridContainer) {
-        $scopegridContainer.style.gridTemplateColumns = `repeat(${$scope.stimuli[$scope.stim_id].gridSize}, 1fr)`;
-        $scopegridContainer.style.gridTemplateRows = `repeat(${$scope.stimuli[$scope.stim_id].gridSize}, 1fr)`;
+      if ($scope.gridContainer) {
+        $scope.gridContainer.style.gridTemplateColumns = `repeat(${$scope.stimuli[$scope.stim_id].gridSize}, 1fr)`;
+        $scope.gridContainer.style.gridTemplateRows = `repeat(${$scope.stimuli[$scope.stim_id].gridSize}, 1fr)`;
       }
     };
 
     // Initialize flasks
-    $scope.initializeFlasks = async function initializeFlasks() {
+    $scope.initializeFlasks = async function () {
       $scope.flasks = document.querySelectorAll('.flask');
       $scope.flasks.forEach(flask => {
         flask.addEventListener('dragstart', $scope.handleDragStart);
@@ -616,7 +625,7 @@ experimentApp.controller('ExperimentController',
     }
 
     // Drag and drop handlers
-    $scope.handleDragStart = function handleDragStart(e) {
+    $scope.handleDragStart = function (e) {
       if (e.target.classList.contains('assigned')) {
         e.preventDefault();
         return;
@@ -626,27 +635,27 @@ experimentApp.controller('ExperimentController',
       e.target.classList.add('dragging');
     }
 
-    $scope.handleDragEnd = function handleDragEnd(e) {
+    $scope.handleDragEnd = function (e) {
       e.target.classList.remove('dragging');
     }
 
-    $scope.handleDragOver = function handleDragOver(e) {
+    $scope.handleDragOver = function (e) {
       if (e.currentTarget.classList.contains('target') && !e.currentTarget.classList.contains('occupied')) {
         e.preventDefault();
       }
     }
 
-    $scope.handleDragEnter = function handleDragEnter(e) {
+    $scope.handleDragEnter = function (e) {
       if (e.currentTarget.classList.contains('target') && !e.currentTarget.classList.contains('occupied')) {
         e.currentTarget.classList.add('drop-target');
       }
     }
 
-    $scope.handleDragLeave = function handleDragLeave(e) {
+    $scope.handleDragLeave = function (e) {
       e.currentTarget.classList.remove('drop-target');
     }
 
-    $scope.handleDrop = function handleDrop(e) {
+    $scope.handleDrop = function (e) {
       e.preventDefault();
       e.currentTarget.classList.remove('drop-target');
       
@@ -661,7 +670,7 @@ experimentApp.controller('ExperimentController',
       $scope.assignFlask($scope.flaskType, $scope.row, $scope.col);
     }
 
-    $scope.assignFlask = function assignFlask(flaskType, row, col) {
+    $scope.assignFlask = function (flaskType, row, col) {
       $scope.cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
       $scope.flask = document.querySelector(`[data-flask="${flaskType}"]`);
       
@@ -673,7 +682,7 @@ experimentApp.controller('ExperimentController',
       $scope.flaskInGrid.textContent = $scope.flask.textContent;
       $scope.flaskInGrid.dataset.flask = flaskType;
       
-      $scope.cell.appendChild(flaskInGrid);
+      $scope.cell.appendChild($scope.flaskInGrid);
       $scope.cell.classList.add('occupied');
       
       // Mark original flask as assigned
@@ -686,9 +695,9 @@ experimentApp.controller('ExperimentController',
       $scope.updateStatus();
     }
 
-    $scope.removeFlask = function removeFlask(row, col) {
+    $scope.removeFlask = function (row, col) {
       $scope.cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
-      $scope.flaskInGrid = cell.querySelector('.flask-in-grid');
+      $scope.flaskInGrid = $scope.cell.querySelector('.flask-in-grid');
       
       if (!$scope.flaskInGrid) return;
       
@@ -707,16 +716,15 @@ experimentApp.controller('ExperimentController',
       // Remove from assignments
       delete $scope.assignments[`${row}-${col}`];
       $scope.assignedCount--;
-      
-      $scope.updateStatus();
+      updateStatus()
     }
 
-    $scope.updateStatus = async function updateStatus() {
+    $scope.updateStatus = async function () {
       $scope.status = document.getElementById('status');
-      $scope.status.textContent = `${$scope.assignedCount}/4 squares assigned`;
+      $scope.status.textContent = `${$scope.assignedCount}/${$scope.stimuli[$scope.stim_id].flasks.length} squares assigned`;
     }
 
-    $scope.resetAssignments = function resetAssignments() {
+    $scope.resetAssignments = function () {
       // Clear all assignments
       Object.keys($scope.assignments).forEach(key => {
         const [row, col] = key.split('-').map(Number);
@@ -724,37 +732,45 @@ experimentApp.controller('ExperimentController',
       });
     }
 
-    $scope.submitAssignment = function submitAssignment() {
-      if ($scope.assignedCount < 4) {
-        alert("Please assign all 4 flasks before submitting.");
+    $scope.submitAssignment = function () {
+      if ($scope.assignedCount < $scope.stimuli[$scope.stim_id].flasks.length) {
+        alert("Please assign all flasks before submitting.");
         return;
       }
-      //else store_db for each flask
+      $scope.store_to_db($scope.user_id + "/assignments/" + $scope.stim_id, $scope.assignments);
+      $scope.advance();
     }
     
-    $scope.initGridContainer = async function initGridContainer() {
+    $scope.initGridContainer = async function () {
       // Initialize the app
       $scope.initializeGrid();
+      $scope.generateFlasks();
       $scope.initializeFlasks();
       $scope.updateStatus();
     }
 
-    // Helper function to check if a cell is a wall
-    $scope.isWallCell = function(row, col) {
-      return $scope.wallSquares.some(wall => wall.row === row && wall.col === col);
-    }
-
-    // Helper function to dynamically add/remove walls
-    $scope.toggleWall = function (row, col) {
-      const wallIndex = $scope.wallSquares.findIndex(wall => wall.row === row && wall.col === col);
-  
-      if (wallIndex !== -1) {
-        // Remove wall
-        $scope.wallSquares.splice(wallIndex, 1);
-      } else {
-        // Add wall
-        $scope.wallSquares.push({ row: row, col: col });
-      }
-    }
+    $scope.generateFlasks = function() {
+      $scope.flasksContainer = document.getElementById('flasks-container');
+      if (!$scope.flasksContainer) return;
+      
+      // Clear existing flasks
+      $scope.flasksContainer.innerHTML = '';
+      
+      // Get current stimulus flasks array
+      $scope.currentFlasks = $scope.stimuli[$scope.stim_id].flasks;
+      
+      // Generate flasks based on the array
+      $scope.currentFlasks.forEach((isPotion, index) => {
+        $scope.flask = document.createElement('div');
+        $scope.flask.className = `flask ${isPotion ? 'potion' : 'poison'}`;
+        $scope.flask.draggable = true;
+        $scope.flask.dataset.flask = `${isPotion ? 'potion' : 'poison'}-${index}`;
+        
+        $scope.flasksContainer.appendChild($scope.flask);
+      });
+      
+      // Reinitialize flask event listeners
+      $scope.initializeFlasks();
+    };
   }
 )
