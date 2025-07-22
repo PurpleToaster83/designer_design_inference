@@ -68,7 +68,7 @@
       </div>
       
       <!-- Grid -->
-        <div ng-show="inst_id != 0 && inst_id != 3 && inst_id != 4 && !instruction_has_question()" class="grid-container" id="grid" ng-init="initGridContainer()"></div>
+        <div ng-hide="section == 'instructions' && inst_id != 2 && inst_id != 1" ng-show="section == 'stimuli" class="grid-container" id="grid" ng-init="initGridContainer()"></div>
       <p class="section_title" ng-show="section == 'instructions' && instruction_has_image()">Tutorial</p>
       <div class="section_title" style="float: left;" ng-show="section == 'stimuli' && part_id >= 0" ng-cloak>
         Round {{stim_id+1}}/{{stimuli_set.length}} </div>
@@ -103,18 +103,25 @@
       <div ng-show="section == 'instructions' && instruction_has_image()" class="captions"
         ng-bind-html="instructions[inst_id].text" ng-cloak>
       </div>
+    
+    <br>
+    <br>
+    <div class="info-container">
+        <div ng-show="(!hide_questions() && has_belief_question()) || section == 'stimuli'" class="sidebar">
+            <h2><u>Available Flasks</u></h2>
+            <div class="flasks-container" id="flasks-container">
+            </div>
 
-    <!--TODO: integrate class="sidebar"-->
-    <div ng-show="!hide_questions() && has_belief_question()" id="question" class="captions" ng-cloak>
-        <h2>Available Flasks</h2>
-        <div class="flasks-container" id="flasks-container">
+            <div class="status" id="status">0/4 squares assigned</div>
+                <button class="reset-button" ng-click="resetAssignments()">Reset All</button>
+                <br><br><br>
+                <button class="submit-button" ng-click="submitAssignment()">Submit Layout</button>
+            </div>
+        
+        <div ng-show="inst_id == 2 || section == 'stimuli'" class="ground-truth" id="ground-truth">
+            <h2><u>Ground Truth</u></h2>
+            <div id="gt"></div>
         </div>
-
-        <div class="status" id="status">0/4 squares assigned</div>
-            <button class="reset-button" ng-click="resetAssignments()">Reset All</button>
-            <br><br><br>
-            <button class="submit-button" ng-click="submitAssignment()">Submit Layout</button>
-        </div> 
     </div>
 
       <!-- Comprehension Questions -->

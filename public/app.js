@@ -60,7 +60,8 @@ experimentApp.controller('ExperimentController',
       "images/potionB.png",
       "images/potionC.png",
       "images/potionD.png",
-    ]
+    ];
+    $scope.gt = document.getElementById('gt');
 
     $scope.log = function (...args) {
       if ($location.search().debug == "true") {
@@ -400,7 +401,7 @@ experimentApp.controller('ExperimentController',
               The rules of the game are as follows:
               <br>
               <ul>
-              <li> Flasks must be placed in one of the yellow squares on the map.</li>
+              <li> Flasks must be placed in one of the orange squares on the map.</li>
               <li> <strong>All</strong> available flasks must be placed.</li>
               <li> All squares <strong>do not</strong> need to be filled.</li>
               <li> You may reset the active map at any time using the <strongreset</strong> button.</li>
@@ -428,99 +429,99 @@ experimentApp.controller('ExperimentController',
       {
         text: `You've now finished the practice round and the player can fight the monster using the potions and poisons you've collected!`
       },
-      {
-        text: `<strong>Comprehension Questions</strong> <br>
-               <br>
-               For the last part of the tutorial, we will ask 5 quick questions to check your understanding of the task.<br>
-               <br>
-               Answer <strong>all questions correctly</strong> in order to proceed to the main experiment.
-               You can retake the quiz as many times as necessary.
-              `
-      },
-      {
-        text: `<strong>Question 1/5:</strong> What is the player investigating?`,
-        options: ["The map",
-          "The flasks",
-          "The monster"],
-        answer: 1,
-        exam: true
-      },
-      {
-        text: `<strong>Question 1/5:</strong>  What is the player investigating?`,
-        options: ["The map",
-          "The flasks",
-          "The monster"],
-        answer: 1,
-        feedback: true
-      },
-      {
-        text: `<strong>Question 2/5:</strong> What is your task in this game?`,
-        options: ["Run away from the monster",
-          "Explore the map",
-          "Guess the identity of the liquid in each flask"],
-        answer: 2,
-        exam: true
-      },
-      {
-        text: `<strong>Question 2/5:</strong> What is your task in this game?`,
-        options: ["Run away from the monster",
-          "Explore the map",
-          "Guess the identity of the liquid in each flask"],
-        answer: 2,
-        feedback: true
-      },
-      {
-        text: `<strong>Question 3/5:</strong> Which of the following is true?`,
-        options: ["The player has <strong> no definite knowledge </strong> about the contents of each flask.",
-          "The player <strong> knows perfectly </strong> what's inside each flask.",
-          "The player <strong> might know exactly </strong> what's in each flask, but <strong> might also be unsure. </strong>"],
-        answer: 0,
-        exam: true
-      },
-      {
-        text: `<strong>Question 3/5:</strong> Which of the following is true?`,
-        options: ["The player has <strong> no definite knowledge </strong> about the contents of each flask.",
-          "The player <strong> knows perfectly </strong> what's inside each flask.",
-          "The player <strong> might know exactly </strong> what's in each flask, but <strong> might also be unsure. </strong>"],
-        answer: 0,
-        feedback: true
-      },
-      {
-        text: `<strong>Question 4/5:</strong> Which of the following is true?`,
-        options: ["The map designer placed the flasks logically and helpfully.",
-          "The map designer placed the flasks randomly.",
-          "The flasks are all potions."],
-        answer: 0,
-        exam: true
-      },
-      {
-        text: `<strong>Question 4/5:</strong> Which of the following is true?`,
-        options: ["The map designer placed the flasks logically and helpfully.",
-          "The map designer placed the flasks randomly.",
-          "The flasks are all potions."],
-        answer: 0,
-        feedback: true
-      },
-      {
-        text: `<strong>Question 5/5:</strong> How can you tell what liquid is in the flask?`,
-        options: ["Guess <strong>either potion or poison</strong> and hope for the best",
-          "The liquid type is explicitly stated somewhere on the map",
-          "Try your best to infer the liquid type knwoing the designer placed them logically"],
-        answer: 2,
-        exam: true
-      },
-      {
-        text: `<strong>Question 5/5:</strong> How can you tell what liquid is in the flask?`,
-        options: ["Guess <strong>either potion or poison</strong> and hope for the best",
-          "The liquid type is explicitly stated somewhere on the map",
-          "Try your best to infer the liquid type knwoing the designer placed them logically"],
-        answer: 2,
-        feedback: true
-      },
-      {
-        exam_end: true,
-        exam_start_id: 11
-      },
+      // {
+      //   text: `<strong>Comprehension Questions</strong> <br>
+      //          <br>
+      //          For the last part of the tutorial, we will ask 5 quick questions to check your understanding of the task.<br>
+      //          <br>
+      //          Answer <strong>all questions correctly</strong> in order to proceed to the main experiment.
+      //          You can retake the quiz as many times as necessary.
+      //         `
+      // },
+      // {
+      //   text: `<strong>Question 1/5:</strong> What is the player investigating?`,
+      //   options: ["The map",
+      //     "The flasks",
+      //     "The monster"],
+      //   answer: 1,
+      //   exam: true
+      // },
+      // {
+      //   text: `<strong>Question 1/5:</strong>  What is the player investigating?`,
+      //   options: ["The map",
+      //     "The flasks",
+      //     "The monster"],
+      //   answer: 1,
+      //   feedback: true
+      // },
+      // {
+      //   text: `<strong>Question 2/5:</strong> What is your task in this game?`,
+      //   options: ["Run away from the monster",
+      //     "Explore the map",
+      //     "Guess the identity of the liquid in each flask"],
+      //   answer: 2,
+      //   exam: true
+      // },
+      // {
+      //   text: `<strong>Question 2/5:</strong> What is your task in this game?`,
+      //   options: ["Run away from the monster",
+      //     "Explore the map",
+      //     "Guess the identity of the liquid in each flask"],
+      //   answer: 2,
+      //   feedback: true
+      // },
+      // {
+      //   text: `<strong>Question 3/5:</strong> Which of the following is true?`,
+      //   options: ["The player has <strong> no definite knowledge </strong> about the contents of each flask.",
+      //     "The player <strong> knows perfectly </strong> what's inside each flask.",
+      //     "The player <strong> might know exactly </strong> what's in each flask, but <strong> might also be unsure. </strong>"],
+      //   answer: 0,
+      //   exam: true
+      // },
+      // {
+      //   text: `<strong>Question 3/5:</strong> Which of the following is true?`,
+      //   options: ["The player has <strong> no definite knowledge </strong> about the contents of each flask.",
+      //     "The player <strong> knows perfectly </strong> what's inside each flask.",
+      //     "The player <strong> might know exactly </strong> what's in each flask, but <strong> might also be unsure. </strong>"],
+      //   answer: 0,
+      //   feedback: true
+      // },
+      // {
+      //   text: `<strong>Question 4/5:</strong> Which of the following is true?`,
+      //   options: ["The map designer placed the flasks logically and helpfully.",
+      //     "The map designer placed the flasks randomly.",
+      //     "The flasks are all potions."],
+      //   answer: 0,
+      //   exam: true
+      // },
+      // {
+      //   text: `<strong>Question 4/5:</strong> Which of the following is true?`,
+      //   options: ["The map designer placed the flasks logically and helpfully.",
+      //     "The map designer placed the flasks randomly.",
+      //     "The flasks are all potions."],
+      //   answer: 0,
+      //   feedback: true
+      // },
+      // {
+      //   text: `<strong>Question 5/5:</strong> How can you tell what liquid is in the flask?`,
+      //   options: ["Guess <strong>either potion or poison</strong> and hope for the best",
+      //     "The liquid type is explicitly stated somewhere on the map",
+      //     "Try your best to infer the liquid type knwoing the designer placed them logically"],
+      //   answer: 2,
+      //   exam: true
+      // },
+      // {
+      //   text: `<strong>Question 5/5:</strong> How can you tell what liquid is in the flask?`,
+      //   options: ["Guess <strong>either potion or poison</strong> and hope for the best",
+      //     "The liquid type is explicitly stated somewhere on the map",
+      //     "Try your best to infer the liquid type knwoing the designer placed them logically"],
+      //   answer: 2,
+      //   feedback: true
+      // },
+      // {
+      //   exam_end: true,
+      //   exam_start_id: 11
+      // },
       {
         text: `Congratulations! You've finished the tutorial.
                <br><br>
@@ -542,8 +543,7 @@ experimentApp.controller('ExperimentController',
 
     $scope.stimuli = [
       {
-        "name": "1_1",
-        // Grid setup - 8x8 grid with 4 yellow target squares
+        "name": "tutorial",
         "gridSize": 7,
         "targetSquares": [
           { row: 0, col: 1 },
@@ -559,10 +559,35 @@ experimentApp.controller('ExperimentController',
         ],
         "monster": {row: 1, col: 6},
         "player": { row: 6, col: 6 },
-        "flasks": [true, false],
+        "flasks": 2,
         "ground_truth": [
           "A is a Potion",
           "B is a Poison"
+        ]
+      },
+      {
+        "name": "1_1",
+        "gridSize": 7,
+        "targetSquares": [
+          { row: 0, col: 1 },
+          { row: 5, col: 2 },
+          { row: 1, col: 6 },
+          { row: 2, col: 3}
+        ],
+        "wallSquares": [
+          { row: 3, col: 3 },
+          { row: 4, col: 3 },
+          { row: 5, col: 3 },
+          { row: 6, col: 3 }
+        ],
+        "monster": {row: 5, col: 6},
+        "player": { row: 3, col: 1 },
+        "flasks": 4,
+        "ground_truth": [
+          "A is a Potion",
+          "B is a Potion",
+          "C is a Poison",
+          "D is a Poison"
         ]
       }
     ]
@@ -733,7 +758,7 @@ experimentApp.controller('ExperimentController',
 
     $scope.updateStatus = async function () {
       $scope.status = document.getElementById('status');
-      $scope.status.textContent = `${$scope.assignedCount}/${$scope.stimuli[$scope.stim_id].flasks.length} squares assigned`;
+      $scope.status.textContent = `${$scope.assignedCount}/${$scope.stimuli[$scope.stim_id].flasks} squares assigned`;
     }
 
     $scope.resetAssignments = function () {
@@ -745,7 +770,7 @@ experimentApp.controller('ExperimentController',
     }
 
     $scope.submitAssignment = function () {
-      if ($scope.assignedCount < $scope.stimuli[$scope.stim_id].flasks.length) {
+      if ($scope.assignedCount < $scope.stimuli[$scope.stim_id].flasks) {
         alert("Please assign all flasks before submitting.");
         return;
       }
@@ -768,13 +793,10 @@ experimentApp.controller('ExperimentController',
       // Clear existing flasks
       $scope.flasksContainer.innerHTML = '';
       
-      // Get current stimulus flasks array
-      $scope.currentFlasks = $scope.stimuli[$scope.stim_id].flasks;
-      
       const letters = ["A", "B", "C", "D"];
 
       // Generate flasks based on the array
-      $scope.currentFlasks.forEach((isPotion, index) => {
+      for (index = 0; index < $scope.stimuli[$scope.stim_id].flasks; index++) {
         $scope.flask = document.createElement('div');
 
         $scope.flask.className = `flask`;
@@ -783,8 +805,9 @@ experimentApp.controller('ExperimentController',
         $scope.flask.dataset.flask = `${index}`;
         
         $scope.flasksContainer.appendChild($scope.flask);
-      });
-      
+
+        $scope.gt.innerHTML += `${$scope.stimuli[$scope.stim_id].ground_truth[index]}<br><br>`;
+      }
       // Reinitialize flask event listeners
       $scope.initializeFlasks();
     };

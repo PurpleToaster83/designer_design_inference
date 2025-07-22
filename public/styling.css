@@ -432,6 +432,32 @@ h1 {
     background-image: url("images/human.png");
 }
 
+.info-container {
+    display: flex;
+}
+
+.ground-truth {
+    margin-left: 140px;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    width: 250px;
+    height: 350px;
+}
+
+.ground-truth h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+
+    text-align: center;
+}
+
+#gt {
+    font-size: large;
+}
+
 @media (max-width: 768px) {
     body {
         flex-direction: column;
