@@ -324,12 +324,8 @@ h1 {
     z-index: 1000;
 }
 
-.flask.potion {
-    background-image: url('images/potion.png');
-}
-
-.flask.poison {
-    background-image: url('images/poison.png');
+.flask {
+    background-image: url('images/potionA.png');
 }
 
 .flask.assigned {
@@ -388,9 +384,9 @@ h1 {
     box-shadow: 0 6px 20px rgba(0,0,0,0.3);
 }
 
-.flask-in-grid.potion {
+.flask-in-grid {
     width: 60px;
-    height: 80px;
+    height: 60px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -401,24 +397,7 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url('images/potion.png');
-    opacity: 0.3;
-}
-
-.flask-in-grid.poison {
-    width: 60px;
-    height: 80px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    cursor: grab;
-    transition: all 0.3s ease;
-    position: relative;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image: url('images/poison.png');
+    background-image: url('images/potionA.png');
     opacity: 0.3;
 }
 

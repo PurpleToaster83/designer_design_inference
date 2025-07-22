@@ -53,8 +53,14 @@ experimentApp.controller('ExperimentController',
 
     $scope.user_count = 0;
 
-    $scope.assignments = {}; // Track which flasks are assigned to which squares
+    $scope.assignments = {};
     $scope.assignedCount = 0;
+    $scope.img_url = [
+      "images/potionA.png",
+      "images/potionB.png",
+      "images/potionC.png",
+      "images/potionD.png",
+    ]
 
     $scope.log = function (...args) {
       if ($location.search().debug == "true") {
@@ -553,7 +559,11 @@ experimentApp.controller('ExperimentController',
         ],
         "monster": {row: 1, col: 6},
         "player": { row: 6, col: 6 },
-        "flasks": [true, true, false]
+        "flasks": [true, false],
+        "ground_truth": [
+          "A is a Potion",
+          "B is a Poison"
+        ]
       }
     ]
 
@@ -678,9 +688,11 @@ experimentApp.controller('ExperimentController',
       
       // Create flask in grid
       $scope.flaskInGrid = document.createElement('div');
-      $scope.flaskInGrid.className = `flask-in-grid ${flaskType}`;
-      $scope.flaskInGrid.textContent = $scope.flask.textContent;
+      $scope.flaskInGrid.className = `flask-in-grid ${flaskType.split('-')[0]}`;
+      $scope.index = (Array.from(document.getElementById('flasks-container').children)).indexOf($scope.flask);
+      $scope.flaskInGrid.style.backgroundImage = `url('${$scope.img_url[$scope.index]}')`;
       $scope.flaskInGrid.dataset.flask = flaskType;
+      $scope.flaskInGrid.textContent = $scope.flask.textContent;
       
       $scope.cell.appendChild($scope.flaskInGrid);
       $scope.cell.classList.add('occupied');
@@ -716,7 +728,7 @@ experimentApp.controller('ExperimentController',
       // Remove from assignments
       delete $scope.assignments[`${row}-${col}`];
       $scope.assignedCount--;
-      updateStatus()
+      $scope.updateStatus()
     }
 
     $scope.updateStatus = async function () {
@@ -759,12 +771,16 @@ experimentApp.controller('ExperimentController',
       // Get current stimulus flasks array
       $scope.currentFlasks = $scope.stimuli[$scope.stim_id].flasks;
       
+      const letters = ["A", "B", "C", "D"];
+
       // Generate flasks based on the array
       $scope.currentFlasks.forEach((isPotion, index) => {
         $scope.flask = document.createElement('div');
-        $scope.flask.className = `flask ${isPotion ? 'potion' : 'poison'}`;
+
+        $scope.flask.className = `flask`;
+        $scope.flask.style.backgroundImage = `url('${$scope.img_url[index]}')`;
         $scope.flask.draggable = true;
-        $scope.flask.dataset.flask = `${isPotion ? 'potion' : 'poison'}-${index}`;
+        $scope.flask.dataset.flask = `${index}`;
         
         $scope.flasksContainer.appendChild($scope.flask);
       });
