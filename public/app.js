@@ -112,8 +112,12 @@ experimentApp.controller('ExperimentController',
 
     $scope.advance = async function () {
       if ($scope.section == "instructions") {
+        if ($scope.inst_id == 2) {
+          $scope.stim_id += 1;
+        }
         await $scope.advance_instructions()
       } else if ($scope.section == "stimuli") {
+        $scope.stim_id += 1;
         await $scope.advance_stimuli()
       } else if ($scope.section == "endscreen") {
         // Do nothing
@@ -124,7 +128,6 @@ experimentApp.controller('ExperimentController',
       if ($scope.inst_id == $scope.instructions.length - 1) {
         // Initialize stimuli section
         $scope.section = "stimuli";
-        $scope.stim_id = 0;
         $scope.part_id = 0;
         $scope.ratings = [];
         $scope.anim_complete = true;
@@ -375,7 +378,7 @@ experimentApp.controller('ExperimentController',
     };
 
     $scope.stimuli_sets = [
-      [1]
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
     ]
 
     $scope.stimuli_set_length = $scope.stimuli_sets[0].length;
@@ -584,12 +587,723 @@ experimentApp.controller('ExperimentController',
         "player": { row: 3, col: 1 },
         "flasks": 4,
         "ground_truth": [
+          "A is a Poison",
+          "B is a Potion",
+          "C is a Potion",
+          "D is a Poison"
+        ]
+      },
+      {
+        "name": "1_2",
+        "gridSize": 7,
+        "targetSquares": [
+          { row: 0, col: 1 },
+          { row: 5, col: 2 },
+          { row: 1, col: 6 },
+          { row: 2, col: 3}
+        ],
+        "wallSquares": [
+          { row: 3, col: 3 },
+          { row: 4, col: 3 },
+          { row: 5, col: 3 },
+          { row: 6, col: 3 }
+        ],
+        "monster": {row: 5, col: 6},
+        "player": { row: 3, col: 1 },
+        "flasks": 2,
+        "ground_truth": [
+          "A is a Poison",
+          "B is a Potion"
+        ]
+      },
+      {
+        "name": "1_3",
+        "gridSize": 7,
+        "targetSquares": [
+          { row: 0, col: 1 },
+          { row: 5, col: 2 },
+          { row: 1, col: 6 },
+          { row: 2, col: 3}
+        ],
+        "wallSquares": [
+          { row: 3, col: 3 },
+          { row: 4, col: 3 },
+          { row: 5, col: 3 },
+          { row: 6, col: 3 }
+        ],
+        "monster": {row: 5, col: 6},
+        "player": { row: 3, col: 1 },
+        "flasks": 3,
+        "ground_truth": [
+          "A is a Poison",
+          "B is a Poison",
+          "C is a Potion"
+        ]
+      },
+      {
+        "name": "1_4",
+        "gridSize": 7,
+        "targetSquares": [
+          { row: 0, col: 1 },
+          { row: 5, col: 2 },
+          { row: 1, col: 6 },
+        ],
+        "wallSquares": [
+          { row: 3, col: 3 },
+          { row: 4, col: 3 },
+          { row: 5, col: 3 },
+          { row: 6, col: 3 }
+        ],
+        "monster": {row: 5, col: 6},
+        "player": { row: 3, col: 1 },
+        "flasks": 3,
+        "ground_truth": [
+          "A is a Potion",
+          "B is a Poison",
+          "C is a Potion"
+        ]
+      },
+      {
+        "name": "1_5",
+        "gridSize": 7,
+        "targetSquares": [
+          { row: 0, col: 1 },
+          { row: 5, col: 2 },
+          { row: 1, col: 6 },
+          { row: 2, col: 3}
+        ],
+        "wallSquares": [
+          { row: 3, col: 3 },
+          { row: 4, col: 3 },
+          { row: 5, col: 3 },
+          { row: 6, col: 3 }
+        ],
+        "monster": {row: 5, col: 6},
+        "player": { row: 3, col: 1 },
+        "flasks": 2,
+        "ground_truth": [
+          "A is a Potion",
+          "B is a Poison"
+        ]
+      },
+      {
+        "name": "1_6",
+        "gridSize": 7,
+        "targetSquares": [
+          { row: 0, col: 1 },
+          { row: 5, col: 2 },
+          { row: 1, col: 6 },
+          { row: 2, col: 3}
+        ],
+        "wallSquares": [
+          { row: 3, col: 3 },
+          { row: 4, col: 3 },
+          { row: 5, col: 3 },
+          { row: 6, col: 3 }
+        ],
+        "monster": {row: 5, col: 6},
+        "player": { row: 3, col: 1 },
+        "flasks": 3,
+        "ground_truth": [
+          "A is a Poison",
+          "B is a Potion",
+          "C is a Poison"
+        ]
+      },
+      {
+        "name": "2_1",
+        "gridSize": 7,
+        "targetSquares": [
+          { row: 0, col: 1 },
+          { row: 1, col: 6 },
+          { row: 5, col: 2 }
+        ],
+        "wallSquares": [
+          { row: 2, col: 0 },
+          { row: 2, col: 1 },
+          { row: 2, col: 2 },
+          { row: 2, col: 3 }
+        ],
+        "monster": {row: 5, col: 6},
+        "player": { row: 3, col: 1},
+        "flasks": 3,
+        "ground_truth": [
+          "A is a Poison",
+          "B is a Potion",
+          "C is a Potion"
+        ]
+      },
+      {
+        "name": "2_2",
+        "gridSize": 7,
+        "targetSquares": [
+          { row: 0, col: 1 },
+          { row: 1, col: 6 },
+          { row: 5, col: 2 }
+        ],
+        "wallSquares": [
+          { row: 2, col: 0 },
+          { row: 2, col: 1 },
+          { row: 2, col: 2 },
+          { row: 2, col: 3 }
+        ],
+        "monster": {row: 5, col: 6},
+        "player": { row: 3, col: 1},
+        "flasks": 2,
+        "ground_truth": [
+          "A is a Potion",
+          "B is a Poison"
+        ]
+      },
+      {
+        "name": "2_3",
+        "gridSize": 7,
+        "targetSquares": [
+          { row: 0, col: 1 },
+          { row: 1, col: 6 },
+          { row: 5, col: 2 }
+        ],
+        "wallSquares": [
+          { row: 2, col: 0 },
+          { row: 2, col: 1 },
+          { row: 2, col: 2 },
+          { row: 2, col: 3 }
+        ],
+        "monster": {row: 5, col: 6},
+        "player": { row: 3, col: 1},
+        "flasks": 2,
+        "ground_truth": [
+          "A is a Poison",
+          "B is a Potion"
+        ]
+      },
+      {
+        "name": "2_4",
+        "gridSize": 7,
+        "targetSquares": [
+          { row: 0, col: 1 },
+          { row: 1, col: 6 },
+          { row: 5, col: 2 },
+          { row: 4, col: 5}
+        ],
+        "wallSquares": [
+          { row: 2, col: 0 },
+          { row: 2, col: 1 },
+          { row: 2, col: 2 },
+          { row: 2, col: 3 }
+        ],
+        "monster": {row: 5, col: 6},
+        "player": { row: 3, col: 1},
+        "flasks": 4,
+        "ground_truth": [
+          "A is a Poison",
+          "B is a Potion",
+          "C is a Potion",
+          "D is a Poison"
+        ]
+      },
+      {
+        "name": "2_5",
+        "gridSize": 7,
+        "targetSquares": [
+          { row: 0, col: 1 },
+          { row: 1, col: 6 },
+          { row: 5, col: 2 },
+          { row: 4, col: 5}
+        ],
+        "wallSquares": [
+          { row: 2, col: 0 },
+          { row: 2, col: 1 },
+          { row: 2, col: 2 },
+          { row: 2, col: 3 }
+        ],
+        "monster": {row: 5, col: 6},
+        "player": { row: 3, col: 1},
+        "flasks": 2,
+        "ground_truth": [
+          "A is a Potion",
+          "B is a Poison"
+        ]
+      },
+      {
+        "name": "2_6",
+        "gridSize": 7,
+        "targetSquares": [
+          { row: 0, col: 1 },
+          { row: 1, col: 6 },
+          { row: 5, col: 2 },
+          { row: 4, col: 5}
+        ],
+        "wallSquares": [
+          { row: 2, col: 0 },
+          { row: 2, col: 1 },
+          { row: 2, col: 2 },
+          { row: 2, col: 3 }
+        ],
+        "monster": {row: 5, col: 6},
+        "player": { row: 3, col: 1},
+        "flasks": 2,
+        "ground_truth": [
+          "A is a Poison",
+          "B is a Potion"
+        ]
+      },
+      {
+        "name": "3_1",
+        "gridSize": 7,
+        "targetSquares": [
+          { row: 0, col: 1 },
+          { row: 4, col: 6 }
+        ],
+        "wallSquares": [
+
+        ],
+        "monster": {row: 1, col: 5},
+        "player": { row: 5, col: 1},
+        "flasks": 2,
+        "ground_truth": [
+          "A is a Potion",
+          "B is a Poison"
+        ]
+      },
+      {
+        "name": "3_2",
+        "gridSize": 7,
+        "targetSquares": [
+          { row: 0, col: 1 },
+          { row: 4, col: 6 },
+          { row: 6, col: 0 }
+        ],
+        "wallSquares": [
+
+        ],
+        "monster": {row: 1, col: 5},
+        "player": { row: 5, col: 1},
+        "flasks": 2,
+        "ground_truth": [
+          "A is a Poison",
+          "B is a Potion"
+        ]
+      },
+      {
+        "name": "3_3",
+        "gridSize": 7,
+        "targetSquares": [
+          { row: 0, col: 1 },
+          { row: 6, col: 0 }
+        ],
+        "wallSquares": [
+
+        ],
+        "monster": {row: 1, col: 5},
+        "player": { row: 5, col: 1},
+        "flasks": 2,
+        "ground_truth": [
+          "A is a Potion",
+          "B is a Poison"
+        ]
+      },
+      {
+        "name": "3_4",
+        "gridSize": 7,
+        "targetSquares": [
+          { row: 0, col: 1 },
+          { row: 4, col: 1 },
+          { row: 5, col: 5}
+        ],
+        "wallSquares": [
+
+        ],
+        "monster": {row: 2, col: 1},
+        "player": { row: 1, col: 5},
+        "flasks": 3,
+        "ground_truth": [
+          "A is a Potion",
+          "B is a Potion",
+          "C is a Poison"
+        ]
+      },
+      {
+        "name": "3_5",
+        "gridSize": 7,
+        "targetSquares": [
+          { row: 0, col: 1 },
+          { row: 4, col: 1 },
+          { row: 5, col: 5}
+        ],
+        "wallSquares": [
+
+        ],
+        "monster": {row: 2, col: 1},
+        "player": { row: 1, col: 5},
+        "flasks": 2,
+        "ground_truth": [
+          "A is a Potion",
+          "B is a Poison"
+        ]
+      },
+      {
+        "name": "3_6",
+        "gridSize": 7,
+        "targetSquares": [
+          { row: 0, col: 1 },
+          { row: 4, col: 1 },
+          { row: 5, col: 5}
+        ],
+        "wallSquares": [
+
+        ],
+        "monster": {row: 2, col: 1},
+        "player": { row: 1, col: 5},
+        "flasks": 3,
+        "ground_truth": [
+          "A is a Potion",
+          "B is a Poison",
+          "C is a Poison"
+        ]
+      },
+      {
+        "name": "4_1",
+        "gridSize": 8,
+        "targetSquares": [
+          { row: 0, col: 0},
+          { row: 2, col: 0},
+          { row: 7, col: 7}
+        ],
+        "wallSquares": [
+          { row: 1, col: 0},
+          { row: 1, col: 1},
+          { row: 1, col: 2 },
+          { row: 1, col: 3},
+          { row: 1, col: 4},
+          { row: 4, col: 5},
+          { row: 5, col: 5},
+          { row: 6, col: 5 },
+          { row: 7, col: 5}
+        ],
+        "monster": {row: 0, col: 7},
+        "player": { row: 6, col: 1},
+        "flasks": 3,
+        "ground_truth": [
+          "A is a Poison",
+          "B is a Potion",
+          "C is a Potion"
+        ]
+      },
+      {
+        "name": "4_2",
+        "gridSize": 8,
+        "targetSquares": [
+          { row: 0, col: 0},
+          { row: 2, col: 0},
+          { row: 7, col: 7}
+        ],
+        "wallSquares": [
+          { row: 1, col: 0},
+          { row: 1, col: 1},
+          { row: 1, col: 2 },
+          { row: 1, col: 3},
+          { row: 1, col: 4},
+          { row: 4, col: 5},
+          { row: 5, col: 5},
+          { row: 6, col: 5 },
+          { row: 7, col: 5}
+        ],
+        "monster": {row: 0, col: 7},
+        "player": { row: 6, col: 1},
+        "flasks": 2,
+        "ground_truth": [
+          "A is a Poison",
+          "B is a Potion"
+        ]
+      },
+      {
+        "name": "4_3",
+        "gridSize": 8,
+        "targetSquares": [
+          { row: 0, col: 0},
+          { row: 7, col: 7}
+        ],
+        "wallSquares": [
+          { row: 1, col: 0},
+          { row: 1, col: 1},
+          { row: 1, col: 2 },
+          { row: 1, col: 3},
+          { row: 1, col: 4},
+          { row: 4, col: 5},
+          { row: 5, col: 5},
+          { row: 6, col: 5 },
+          { row: 7, col: 5}
+        ],
+        "monster": {row: 0, col: 7},
+        "player": { row: 6, col: 1},
+        "flasks": 2,
+        "ground_truth": [
+          "A is a Poison",
+          "B is a Potion"
+        ]
+      },
+      {
+        "name": "4_4",
+        "gridSize": 8,
+        "targetSquares": [
+          { row: 0, col: 0},
+          { row: 3, col: 3}
+        ],
+        "wallSquares": [
+          { row: 1, col: 0},
+          { row: 1, col: 1},
+          { row: 1, col: 2 },
+          { row: 1, col: 3},
+          { row: 1, col: 4},
+          { row: 4, col: 5},
+          { row: 5, col: 5},
+          { row: 6, col: 5 },
+          { row: 7, col: 5}
+        ],
+        "monster": {row: 7, col: 7},
+        "player": { row: 6, col: 1},
+        "flasks": 2,
+        "ground_truth": [
+          "A is a Poison",
+          "B is a Potion"
+        ]
+      },
+      {
+        "name": "4_5",
+        "gridSize": 8,
+        "targetSquares": [
+          { row: 0, col: 0},
+          { row: 3, col: 3 },
+          { row: 7, col: 6}
+        ],
+        "wallSquares": [
+          { row: 1, col: 0},
+          { row: 1, col: 1},
+          { row: 1, col: 2 },
+          { row: 1, col: 3},
+          { row: 1, col: 4},
+          { row: 4, col: 5},
+          { row: 5, col: 5},
+          { row: 6, col: 5 },
+          { row: 7, col: 5}
+        ],
+        "monster": {row: 7, col: 7},
+        "player": { row: 6, col: 1},
+        "flasks": 3,
+        "ground_truth": [
+          "A is a Poison",
+          "B is a Potion",
+          "C is a Potion"
+        ]
+      },
+      {
+        "name": "4_6",
+        "gridSize": 8,
+        "targetSquares": [
+          { row: 0, col: 0},
+          { row: 3, col: 3 },
+          { row: 7, col: 6}
+        ],
+        "wallSquares": [
+          { row: 1, col: 0},
+          { row: 1, col: 1},
+          { row: 1, col: 2 },
+          { row: 1, col: 3},
+          { row: 1, col: 4},
+          { row: 4, col: 5},
+          { row: 5, col: 5},
+          { row: 6, col: 5 },
+          { row: 7, col: 5}
+        ],
+        "monster": {row: 7, col: 7},
+        "player": { row: 6, col: 1},
+        "flasks": 2,
+        "ground_truth": [
+          "A is a Poison",
+          "B is a Potion"
+        ]
+      },
+      {
+        "name": "5_1",
+        "gridSize": 8,
+        "targetSquares": [
+          { row: 2, col: 0},
+          { row: 1, col: 6},
+          { row: 7, col: 7}
+        ],
+        "wallSquares": [
+          { row: 1, col: 0},
+          { row: 1, col: 1 },
+          { row: 1, col: 2 },
+          { row: 1, col: 3 },
+          { row: 1, col: 4 },
+          { row: 4, col: 2},
+          { row: 4, col: 3},
+          { row: 4, col: 4},
+          { row: 4, col: 5 },
+          { row: 4, col: 6},
+          { row: 4, col: 7}
+        ],
+        "monster": {row: 0, col: 0},
+        "player": { row: 6, col: 1},
+        "flasks": 3,
+        "ground_truth": [
+          "A is a Potion",
+          "B is a Potion",
+          "C is a Poison"
+        ]
+      },
+      {
+        "name": "5_2",
+        "gridSize": 8,
+        "targetSquares": [
+          { row: 2, col: 0},
+          { row: 1, col: 6},
+          { row: 7, col: 7}
+        ],
+        "wallSquares": [
+          { row: 1, col: 0},
+          { row: 1, col: 1 },
+          { row: 1, col: 2 },
+          { row: 1, col: 3 },
+          { row: 1, col: 4 },
+          { row: 4, col: 2},
+          { row: 4, col: 3},
+          { row: 4, col: 4},
+          { row: 4, col: 5 },
+          { row: 4, col: 6},
+          { row: 4, col: 7}
+        ],
+        "monster": {row: 0, col: 0},
+        "player": { row: 6, col: 1},
+        "flasks": 2,
+        "ground_truth": [
+          "A is a Potion",
+          "B is a Poison"
+        ]
+      },
+      {
+        "name": "5_3",
+        "gridSize": 8,
+        "targetSquares": [
+          { row: 2, col: 0},
+          { row: 1, col: 6},
+          { row: 7, col: 7}
+        ],
+        "wallSquares": [
+          { row: 1, col: 0},
+          { row: 1, col: 1 },
+          { row: 1, col: 2 },
+          { row: 1, col: 3 },
+          { row: 1, col: 4 },
+          { row: 4, col: 2},
+          { row: 4, col: 3},
+          { row: 4, col: 4},
+          { row: 4, col: 5 },
+          { row: 4, col: 6},
+          { row: 4, col: 7}
+        ],
+        "monster": {row: 0, col: 0},
+        "player": { row: 6, col: 1},
+        "flasks": 2,
+        "ground_truth": [
+          "A is a Potion",
+          "B is a Poison"
+        ]
+      },
+      {
+        "name": "5_4",
+        "gridSize": 8,
+        "targetSquares": [
+          { row: 1, col: 7},
+          { row: 2, col: 0},
+          { row: 5, col: 2},
+          { row: 7, col: 6}
+        ],
+        "wallSquares": [
+          { row: 1, col: 0},
+          { row: 1, col: 1 },
+          { row: 1, col: 2 },
+          { row: 1, col: 3 },
+          { row: 1, col: 4 },
+          { row: 4, col: 2},
+          { row: 4, col: 3},
+          { row: 4, col: 4},
+          { row: 4, col: 5 },
+          { row: 4, col: 6},
+          { row: 4, col: 7}
+        ],
+        "monster": {row: 7, col: 1},
+        "player": { row: 0, col: 1},
+        "flasks": 4,
+        "ground_truth": [
           "A is a Potion",
           "B is a Potion",
           "C is a Poison",
           "D is a Poison"
         ]
-      }
+      },
+      {
+        "name": "5_5",
+        "gridSize": 8,
+        "targetSquares": [
+          { row: 1, col: 7},
+          { row: 2, col: 0},
+          { row: 5, col: 2},
+          { row: 7, col: 6}
+        ],
+        "wallSquares": [
+          { row: 1, col: 0},
+          { row: 1, col: 1 },
+          { row: 1, col: 2 },
+          { row: 1, col: 3 },
+          { row: 1, col: 4 },
+          { row: 4, col: 2},
+          { row: 4, col: 3},
+          { row: 4, col: 4},
+          { row: 4, col: 5 },
+          { row: 4, col: 6},
+          { row: 4, col: 7}
+        ],
+        "monster": {row: 7, col: 1},
+        "player": { row: 0, col: 1},
+        "flasks": 2,
+        "ground_truth": [
+          "A is a Potion",
+          "B is a Poison"
+        ]
+      },
+      {
+        "name": "5_6",
+        "gridSize": 8,
+        "targetSquares": [
+          { row: 1, col: 7},
+          { row: 2, col: 0},
+          { row: 5, col: 2},
+          { row: 7, col: 6}
+        ],
+        "wallSquares": [
+          { row: 1, col: 0},
+          { row: 1, col: 1 },
+          { row: 1, col: 2 },
+          { row: 1, col: 3 },
+          { row: 1, col: 4 },
+          { row: 4, col: 2},
+          { row: 4, col: 3},
+          { row: 4, col: 4},
+          { row: 4, col: 5 },
+          { row: 4, col: 6},
+          { row: 4, col: 7}
+        ],
+        "monster": {row: 7, col: 1},
+        "player": { row: 0, col: 1},
+        "flasks": 2,
+        "ground_truth": [
+          "A is a Poison",
+          "B is a Potion"
+        ]
+      },
     ]
 
     // Initialize grid
@@ -769,14 +1483,31 @@ experimentApp.controller('ExperimentController',
       });
     }
 
-    $scope.submitAssignment = function () {
-      if ($scope.assignedCount < $scope.stimuli[$scope.stim_id].flasks) {
-        alert("Please assign all flasks before submitting.");
-        return;
-      }
-      $scope.store_to_db($scope.user_id + "/assignments/" + $scope.stim_id, $scope.assignments);
-      $scope.advance();
-    }
+$scope.submitAssignment = function () {
+  if ($scope.assignedCount < $scope.stimuli[$scope.stim_id].flasks) {
+    alert("Please assign all flasks before submitting.");
+    return;
+  }
+  
+  // Store current assignment
+  $scope.store_to_db($scope.user_id + "/assignments/" + $scope.stim_id, $scope.assignments);
+  
+  // Move to next stimulus
+  $scope.advance()
+  
+  // Check if we've completed all stimuli
+  if ($scope.stim_id >= $scope.stimuli.length) {
+    $scope.section = "endscreen";
+    return;
+  }
+  
+  // Reset assignments for new stimulus
+  $scope.assignments = {};
+  $scope.assignedCount = 0;
+  
+  // Reinitialize grid with new stimulus data
+  $scope.initGridContainer();
+}
     
     $scope.initGridContainer = async function () {
       // Initialize the app
@@ -796,6 +1527,7 @@ experimentApp.controller('ExperimentController',
       const letters = ["A", "B", "C", "D"];
 
       // Generate flasks based on the array
+      $scope.gt.innerHTML = "";
       for (index = 0; index < $scope.stimuli[$scope.stim_id].flasks; index++) {
         $scope.flask = document.createElement('div');
 
