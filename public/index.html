@@ -76,15 +76,33 @@
         Round {{stim_id}}/{{stimuli_set.length}} </div>
 
       <!-- Endscreen -->
-      <p ng-show="section == 'endscreen'" class="full-row" ng-cloak>
-        You're all done!
-        <br><br>
+      <div id="end" ng-show="section == 'endscreen'" class="full-row" ng-if="section == 'endscreen' && end_id == 0" ng-cloak>
+              You're all done!
+              <br>
+              <br>
+              Your completion code is: {{user_id}}
+              <br><br><br>
+      </div>
+      <div id="end" ng-show="section == 'endscreen'" class="full-row" ng-if="section == 'endscreen' && end_id == 1" ng-cloak>
+          Please answer the following demographic questions:
+          <br><br>
+          <strong>What is Your Age?   </strong> <input id="age" type="number">
+          <br><br>
+          <strong>What is your gender?   </strong> <input id="gender" type="text">
+          <br><br>
+          <strong>What is your ethnicity?   </strong> <input id="ethnicity" type="text">
+          <br><br>
+          <strong>What is your Prolific/Mturk ID?   </strong> <input id="mturkID" type="number">
+          <br><br>
+          <strong>Do you have any feedback?   </strong> <input id="feedback" type="text">
+      </div>
+      <div id="end" ng-show="section == 'endscreen'" class="full-row" ng-if="section == 'endscreen' && end_id == 2" ng-cloak>
         Thank you for your time :)
-      </p>
+      </div>
 
       <!-- Controls -->
       <div class="controls" ng-cloak>
-        <button class="button" ng-click="advance()" ng-hide="section == 'stimuli' && part_id <= 0 || (!hide_questions() && has_belief_question())"
+        <button class="button" ng-click="advance()" ng-hide="section == 'stimuli' && part_id <= 0 || (!hide_questions() && has_belief_question()) || end_id == 2"
           ng-disabled="section == 'endscreen' ||
             (stimuli_set.length == 0) || && !hide_questions() ||
             (valid_belief == false && has_belief_question()) && !hide_questions() ||
