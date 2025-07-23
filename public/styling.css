@@ -47,8 +47,9 @@ body {
 .caption-image {
   display: inline;
   height: 14pt;
-  width: 14pt;
-  vertical-align: text-bottom;
+  width: 14px;
+  vertical-align: 1px;
+  object-fit: scale-down;
 }
 
 .underline {
