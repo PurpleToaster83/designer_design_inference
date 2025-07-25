@@ -263,11 +263,7 @@ experimentApp.controller('ExperimentController',
       );
 
       rating = {
-        "timestep": cur_stim.times[$scope.part_id],
-        "time_spent": ((new Date()).getTime() - start_time) / 1000.,
         "statement_ratings": statement_ratings,
-        "statement_probs": statement_probs,
-        "statement_ids": response.belief_ids.map(v => v + 1),
       }
       return rating;
     };

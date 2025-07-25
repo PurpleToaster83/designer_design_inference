@@ -233,10 +233,6 @@ h1 {
     gap: 10px;
 }
 
-.flask-emoji {
-    font-size: 1.2em;
-}
-
 .grid-container {
     display: grid;
     gap: 2px;
@@ -277,11 +273,12 @@ h1 {
 }
 
 .sidebar {
-    background: white;
+    background: rgb(255, 255, 255);
     padding: 30px;
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    width: 250px;
+    width: 400px;
+    display: flex;
 }
 
 .sidebar h2 {
@@ -342,10 +339,12 @@ h1 {
     text-align: center;
     font-weight: bold;
     color: #333;
+    width: 150%;
+    transform: translateX(60px);
 }
 
 .reset-button {
-    width: 100%;
+    width: 150%;
     padding: 12px;
     background: linear-gradient(145deg, #ff6b6b, #ee5a52);
     color: white;
@@ -356,15 +355,18 @@ h1 {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transform: translateX(60px);
+    margin-bottom: 20px;
 }
 
 .reset-button:hover {
-    transform: translateY(-2px);
+    transform: translateY(-5px);
     box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    transform: translateX(60px);
 }
 
 .submit-button {
-    width: 100%;
+    width: 150%;
     padding-top: 12px;
     padding-bottom: 12px;
     padding-left: 5px;
@@ -378,11 +380,13 @@ h1 {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transform: translateX(60px);
 }
 
 .submit-button:hover {
-    transform: translateY(-2px);
+    transform: translateY(-5px);
     box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    transform: translateX(60px);
 }
 
 .flask-in-grid {
@@ -438,21 +442,16 @@ h1 {
 }
 
 .ground-truth {
-    margin-left: 140px;
-    background: white;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    width: 250px;
-    height: 350px;
+    width: 200px;
+    margin-left: 50px;
+    height: 220px;
 }
 
 .ground-truth h2 {
     color: #333;
     margin-bottom: 20px;
     font-size: 1.2em;
-
-    text-align: center;
+    text-align: left;
 }
 
 #gt {
