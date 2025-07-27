@@ -71,17 +71,13 @@
         <div ng-hide="section == 'instructions' && inst_id != 2 && inst_id != 1 || section == 'endscreen'" ng-show="section == 'stimuli" class="grid-container" id="grid" ng-init="initGridContainer()"></div>
       <p class="section_title" ng-show="section == 'instructions' && instruction_has_image()">Tutorial</p>
       <div class="section_title" style="float: left;" ng-show="section == 'stimuli' && part_id >= 0" ng-cloak>
-        Round {{stim_id}}/{{stimuli_set.length - 1}} </div>
+        Round {{stim_id}}/{{stimuli_set.length}} </div>
       <div class="section_title" style="float: left;" ng-show="section == 'stimuli' && part_id < 0" ng-cloak>
         Round {{stim_id}}/{{stimuli_set.length}} </div>
 
       <!-- Endscreen -->
       <div id="end" ng-show="section == 'endscreen'" class="full-row" ng-if="section == 'endscreen' && end_id == 0" ng-cloak>
               You're all done!
-              <br>
-              <br>
-              Your completion code is: {{user_id}}
-              <br><br><br>
       </div>
       <div id="end" ng-show="section == 'endscreen'" class="full-row" ng-if="section == 'endscreen' && end_id == 1" ng-cloak>
           Please answer the following demographic questions:

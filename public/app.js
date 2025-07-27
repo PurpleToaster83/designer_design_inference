@@ -62,6 +62,13 @@ experimentApp.controller('ExperimentController',
       "images/potionD.png",
     ];
     $scope.gt = document.getElementById('gt');
+    $scope.active_stim = NaN;
+    $scope.data = {
+      "user_id": NaN,
+      "demographic_survey": NaN,
+      "assignments": {},
+      "exam": NaN
+    }
 
     $scope.log = function (...args) {
       if ($location.search().debug == "true") {
@@ -110,6 +117,24 @@ experimentApp.controller('ExperimentController',
       $scope.valid_exam = true;
     }
 
+    $scope.set_belief_statements = async function(stim_id) {
+      if (stim_id < $scope.stimuli_set.length) {
+        let cur_stim = $scope.stimuli_set[stim_id];
+        if (cur_stim.statements) {
+          $scope.belief_statements = cur_stim.statements;
+          let n = $scope.belief_statements.length;
+          $scope.belief_statement_ids = Array.from(Array(n).keys());
+        }
+      }
+    };
+
+    $scope.reset_response = function() {
+      $scope.response = {
+        "beliefs": [NaN, NaN],
+        "belief_ids": [1, 2]
+      };
+    };
+
     $scope.advance = async function () {
       if ($scope.section == "instructions") {
         if ($scope.inst_id == 2) {
@@ -135,8 +160,10 @@ experimentApp.controller('ExperimentController',
             mturk_id: $scope.id_q.value,
             feedback: $scope.feedback_q.value
           }
-          $scope.store_to_db($scope.user_id + "/demographic_survey", $scope.survey);
-        }      }
+          $scope.data.demographic_survey = $scope.survey;
+          $scope.store_to_db($scope.user_id, $scope.data);
+        }
+      }
     };
     
     $scope.advance_instructions = async function () {
@@ -160,7 +187,7 @@ experimentApp.controller('ExperimentController',
           }
           $scope.log("Exam Results: " + exam_data.results);
           $scope.log("Exam Score: " + exam_data.score);
-          $scope.store_to_db($scope.user_id + "/exam", exam_data);
+          $scope.data.exam = exam_data;
           $scope.exam_done = true;
         }
         // Loop back to start of exam if not all questions are correct
@@ -226,8 +253,6 @@ experimentApp.controller('ExperimentController',
         }
         $scope.part_id = $scope.part_id + 1;
         if ($scope.part_id == $scope.stimuli_set[$scope.stim_id].length) {
-          // Store ratings
-          $scope.store_to_db($scope.user_id + "/" + $scope.stimuli_set[$scope.stim_id].name, $scope.ratings);
           // Advance to next problem.
           $scope.part_id = -1;
           $scope.anim_complete = true;
@@ -355,15 +380,13 @@ experimentApp.controller('ExperimentController',
 
     $scope.stimuli_set = [];
     $scope.set_stimuli = async function () {
-      // Uncomment for testing stimuli
+      // Use only the first stimulus (index 0) for testing
+      $scope.stimuli_set = [$scope.stimuli[0]];
+      $scope.log("Using first stimulus for testing: ", $scope.stimuli_set);
+      // Production behavior: use stimuli_sets for indexing
       let stim_idx = [];
-      if ($location.search().test_all == "true") {
-        stim_idx = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-          11, 12, 13, 14, 15, 16, 17, 18];
-      } else {
-        let count = await $scope.get_counter();
-        stim_idx = $scope.stimuli_sets[count % $scope.stimuli_sets.length];
-      }
+      let count = await $scope.get_counter();
+      stim_idx = $scope.stimuli_sets[count % $scope.stimuli_sets.length];
 
       $scope.log("stimuli idx = ", stim_idx);
       for (i = 0; i < stim_idx.length; i++) {
@@ -371,28 +394,12 @@ experimentApp.controller('ExperimentController',
       }
       $scope.stimuli_set = $scope.array_shuffle($scope.stimuli_set);
       $scope.log("stimuli ", $scope.stimuli_set);
-
-      // Store stimuli set and user ID
-      $scope.store_to_db($scope.user_id + "/stimuli_set", stim_idx);
-      $scope.store_to_db($scope.user_id + "/user_id", $scope.user_id);
-
-      // Increment participant counter
-      if ($location.search().test_all != "true") {
-        $scope.increment_counter();
-      }
-
-      // Preload first stimulus
-      preloader.preloadImages($scope.stimuli_set[0].images).then(
-        function handleResolve(imglocs) {
-          console.info("Preloaded first stimulus.");
-        }
-      );
     };
 
     $scope.stimuli_sets = [    
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      [11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
-      [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+      [1, 4, 7, 10, 13, 16, 19, 22, 25, 28],
+      [2, 5, 8, 11, 14, 17, 20, 23, 26, 29],
+      [3, 6, 9, 12, 15, 18, 21, 24, 27, 30]
     ]
 
     $scope.stimuli_set_length = $scope.stimuli_sets[0].length;
@@ -1325,33 +1332,33 @@ experimentApp.controller('ExperimentController',
       $scope.grid = document.getElementById('grid');
       $scope.grid.innerHTML = '';
       
-      for (let row = 0; row < $scope.stimuli[$scope.stim_id].gridSize; row++) {
-        for (let col = 0; col < $scope.stimuli[$scope.stim_id].gridSize; col++) {
+      for (let row = 0; row < $scope.active_stim.gridSize; row++) {
+        for (let col = 0; col < $scope.active_stim.gridSize; col++) {
           $scope.cell = document.createElement('div');
           $scope.cell.className = 'grid-cell';
           $scope.cell.dataset.row = row;
           $scope.cell.dataset.col = col;
               
           // Check if this cell is a target square
-          $scope.isTarget = $scope.stimuli[$scope.stim_id].targetSquares.some(target => target.row === row && target.col === col);
+          $scope.isTarget = $scope.active_stim.targetSquares.some(target => target.row === row && target.col === col);
           if ($scope.isTarget) {
             $scope.cell.classList.add('target');
           }
 
           // Check if this cell is a wall square
-          $scope.isWall = $scope.stimuli[$scope.stim_id].wallSquares.some(wall => wall.row === row && wall.col === col);
+          $scope.isWall = $scope.active_stim.wallSquares.some(wall => wall.row === row && wall.col === col);
           if ($scope.isWall) {
             $scope.cell.classList.add('wall');
           }
 
           // Check if this cell is a monster
-          $scope.isMonster = $scope.stimuli[$scope.stim_id].monster.row === row && $scope.stimuli[$scope.stim_id].monster.col === col;
+          $scope.isMonster = $scope.active_stim.monster.row === row && $scope.active_stim.monster.col === col;
           if ($scope.isMonster) {
             $scope.cell.classList.add('monster');
           }
 
           // Check if this cell is a player
-          $scope.isPlayer = $scope.stimuli[$scope.stim_id].player.row === row && $scope.stimuli[$scope.stim_id].player.col === col;
+          $scope.isPlayer = $scope.active_stim.player.row === row && $scope.active_stim.player.col === col;
           if ($scope.isPlayer) {
             $scope.cell.classList.add('player');
           }
@@ -1373,8 +1380,8 @@ experimentApp.controller('ExperimentController',
     $scope.updateGridSize = function () {
       $scope.gridContainer = document.getElementById('grid');
       if ($scope.gridContainer) {
-        $scope.gridContainer.style.gridTemplateColumns = `repeat(${$scope.stimuli[$scope.stim_id].gridSize}, 1fr)`;
-        $scope.gridContainer.style.gridTemplateRows = `repeat(${$scope.stimuli[$scope.stim_id].gridSize}, 1fr)`;
+        $scope.gridContainer.style.gridTemplateColumns = `repeat(${$scope.active_stim.gridSize}, 1fr)`;
+        $scope.gridContainer.style.gridTemplateRows = `repeat(${$scope.active_stim.gridSize}, 1fr)`;
       }
     };
 
@@ -1407,6 +1414,15 @@ experimentApp.controller('ExperimentController',
         e.preventDefault();
       }
     }
+
+    $scope.handleCellClick = function(e) {
+      if (e.currentTarget.classList.contains('occupied')) {
+        $scope.row = parseInt(e.currentTarget.dataset.row);
+        $scope.col = parseInt(e.currentTarget.dataset.col);
+        $scope.removeFlask($scope.row, $scope.col);
+        $scope.$apply(); // Trigger Angular digest cycle since this is a DOM event
+      }
+    };
 
     $scope.handleDragEnter = function (e) {
       if (e.currentTarget.classList.contains('target') && !e.currentTarget.classList.contains('occupied')) {
@@ -1486,7 +1502,7 @@ experimentApp.controller('ExperimentController',
 
     $scope.updateStatus = async function () {
       $scope.status = document.getElementById('status');
-      $scope.status.textContent = `${$scope.assignedCount}/${$scope.stimuli[$scope.stim_id].flasks} squares assigned`;
+      $scope.status.textContent = `${$scope.assignedCount}/${$scope.active_stim.flasks} squares assigned`;
     }
 
     $scope.resetAssignments = function () {
@@ -1498,19 +1514,19 @@ experimentApp.controller('ExperimentController',
     }
 
 $scope.submitAssignment = function () {
-  if ($scope.assignedCount < $scope.stimuli[$scope.stim_id].flasks) {
+  if ($scope.assignedCount < $scope.active_stim.flasks) {
     alert("Please assign all flasks before submitting.");
     return;
   }
   
   // Store current assignment
-  $scope.store_to_db($scope.user_id + "/assignments/" + $scope.stim_id, $scope.assignments);
+  $scope.data.assignments[$scope.active_stim.name] = $scope.assignments;
   
   // Move to next stimulus
   $scope.advance()
   
   // Check if we've completed all stimuli
-  if ($scope.stim_id >= $scope.stimuli.length) {
+  if ($scope.stim_id >= $scope.stimuli_set.length) {
     $scope.section = "endscreen";
     return;
   }
@@ -1525,6 +1541,7 @@ $scope.submitAssignment = function () {
     
     $scope.initGridContainer = async function () {
       // Initialize the app
+      $scope.active_stim = $scope.stimuli_set[$scope.stim_id];
       $scope.initializeGrid();
       $scope.generateFlasks();
       $scope.initializeFlasks();
@@ -1542,7 +1559,7 @@ $scope.submitAssignment = function () {
 
       // Generate flasks based on the array
       $scope.gt.innerHTML = "";
-      for (index = 0; index < $scope.stimuli[$scope.stim_id].flasks; index++) {
+      for (index = 0; index < $scope.active_stim.flasks; index++) {
         $scope.flask = document.createElement('div');
 
         $scope.flask.className = `flask`;
@@ -1552,7 +1569,7 @@ $scope.submitAssignment = function () {
         
         $scope.flasksContainer.appendChild($scope.flask);
 
-        $scope.gt.innerHTML += `${$scope.stimuli[$scope.stim_id].ground_truth[index]}<br><br>`;
+        $scope.gt.innerHTML += `${$scope.active_stim.ground_truth[index]}<br><br>`;
       }
       // Reinitialize flask event listeners
       $scope.initializeFlasks();
