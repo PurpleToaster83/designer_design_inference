@@ -135,6 +135,11 @@
       </div>
     </div>
 
+    <h1>Inst ID {{inst_id}}</h1>
+    <h1>Stim ID {{stim_id}}</h1>
+    <h1> Active Stim {{active_stim.name}}</h1>
+    <h1>Stim @ ID {{stimuli[stim_id].name}}</h1>
+
       <!-- Comprehension Questions -->
       <div ng-show="section == 'instructions' && instruction_has_question()" class="comprehension_question" ng-cloak>
         <p ng-bind-html="instructions[inst_id].question"></p>

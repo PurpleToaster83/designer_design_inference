@@ -241,8 +241,8 @@ h1 {
     border-radius: 10px;
     margin-bottom: 20px;
     width: 100%;
-    max-width: 500px; /* or whatever max size you want */
-    aspect-ratio: 1; /* Makes it a perfect square */
+    max-width: 500px;
+    aspect-ratio: 1; /*change this to be dynamic*/
 }
 
 .grid-cell {
