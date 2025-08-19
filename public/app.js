@@ -139,7 +139,7 @@ experimentApp.controller('ExperimentController',
       if ($scope.section == "instructions") {
         await $scope.advance_instructions()
       } else if ($scope.section == "stimuli") {
-          $scope.stim_id += 1;
+        $scope.stim_id += 1;
         await $scope.advance_stimuli()
       } else if ($scope.section == "endscreen") {
         $scope.end_id += 1;
@@ -163,7 +163,7 @@ experimentApp.controller('ExperimentController',
       }
     };
     
-    $scope.advance_instructions = async function () {
+    $scope.advance_instructions = async function () {      
       if ($scope.inst_id == $scope.instructions.length - 1) {
         // Initialize stimuli section
         $scope.section = "stimuli";
@@ -207,12 +207,14 @@ experimentApp.controller('ExperimentController',
         }
         // Increment instruction counter
         $scope.inst_id = $scope.inst_id + 1;
+
         // Delay RHS display
         if ($scope.instructions[$scope.inst_id].delay > 0) {
           $scope.show_rhs = false;
           $timeout(function () { $scope.show_rhs = true; },
             $scope.instructions[$scope.inst_id].delay);
         }
+        
         // Set new belief statements
         if ($scope.has_belief_question()) {
           $scope.belief_statements = $scope.instructions[$scope.inst_id].statements;
@@ -389,12 +391,12 @@ experimentApp.controller('ExperimentController',
       for (i = 0; i < stim_idx.length; i++) {
         $scope.stimuli_set.push($scope.stimuli[stim_idx[i] - 1]);
       }
-      $scope.stimuli_set = $scope.array_shuffle($scope.stimuli_set);
+      // $scope.stimuli_set = $scope.array_shuffle($scope.stimuli_set);
       $scope.log("stimuli ", $scope.stimuli_set);
     };
 
     $scope.stimuli_sets = [
-      [2, 3, 4, 5, ,6, 7, 8, 9, 10, 11, 12, 13, 14]
+      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
     ]
 
     $scope.stimuli_set_length = $scope.stimuli_sets[0].length;
@@ -434,17 +436,17 @@ experimentApp.controller('ExperimentController',
               `,
         image: "images/poison.png"
       },
-      // { /*This is the issue*/
-      //   text: `Please look at the following map and place the flasks appropriatly<br>
-      //         <br>
-      //         press the <strong>submit</strong> button when you have finished`,
-      //   tutorial: true,
-      //   show_questions: true,
-      //   question_types: ["beliefs"],
-      //   statements: ["Flask <strong>A</strong> is: ",
-      //     "Flask <strong>B</strong> is:"],
-      //   image: "images/poison.png",
-      // },
+      {
+        text: `Please look at the following map and place the flasks appropriatly<br>
+              <br>
+              press the <strong>submit</strong> button when you have finished`,
+        tutorial: true,
+        show_questions: true,
+        question_types: ["beliefs"],
+        statements: ["Flask <strong>A</strong> is: ",
+          "Flask <strong>B</strong> is:"],
+        image: "images/poison.png",
+      },
       {
         text: `Please look at this similar map that is missing one of the yelow squares and place the flasks appropriatly<br>
               <br>
@@ -571,7 +573,7 @@ experimentApp.controller('ExperimentController',
       $scope.inst_id = $scope.instructions.length - 1;
     }
 
-    $scope.stimuli = [
+    $scope.tutorial_stimuli = [
       {
         "name": "tutorial1",
         "gridSize": [7, 7],
@@ -617,6 +619,9 @@ experimentApp.controller('ExperimentController',
           "B is a Potion"
         ]
       },  
+    ]
+
+    $scope.stimuli = [
       {
         "name": "1_1",
         "gridSize": [7, 7],
@@ -632,7 +637,7 @@ experimentApp.controller('ExperimentController',
         ],
         "monster": {row: 5, col: 6},
         "player": { row: 3, col: 1 },
-        "flasks": 4,
+        "flasks": 1,
         "ground_truth": [
           "A is a Poison",
         ]
@@ -652,7 +657,7 @@ experimentApp.controller('ExperimentController',
         ],
         "monster": {row: 5, col: 6},
         "player": { row: 3, col: 0},
-        "flasks": 4,
+        "flasks": 1,
         "ground_truth": [
           "A is a Potion",
         ]
@@ -671,7 +676,7 @@ experimentApp.controller('ExperimentController',
         ],
         "monster": {row: 5, col: 6},
         "player": { row: 3, col: 0},
-        "flasks": 4,
+        "flasks": 1,
         "ground_truth": [
           "A is a Poison",
         ]
@@ -690,7 +695,7 @@ experimentApp.controller('ExperimentController',
         ],
         "monster": {row: 5, col: 6},
         "player": { row: 3, col: 0},
-        "flasks": 4,
+        "flasks": 1,
         "ground_truth": [
           "A is a Potion",
         ]
@@ -847,7 +852,7 @@ experimentApp.controller('ExperimentController',
         ],
         "monster": {row: 6, col: 7},
         "player": {row: 0, col: 1},
-        "flasks": 2,
+        "flasks": 3,
         "ground_truth": [
           "A is a Potion",
           "B is a Potion",
@@ -879,7 +884,7 @@ experimentApp.controller('ExperimentController',
         ],
         "monster": {row: 6, col: 7},
         "player": {row: 0, col: 1},
-        "flasks": 2,
+        "flasks": 3,
         "ground_truth": [
           "A is a Potion",
           "B is a Poison",
@@ -1101,7 +1106,17 @@ $scope.submitAssignment = function () {
 }
     
     $scope.initGridContainer = async function () {
-      $scope.active_stim = $scope.stimuli_set[$scope.stim_id];
+      if ($scope.section == 'instructions') {
+        if ($scope.inst_id <= 2) {
+          $scope.active_stim = $scope.tutorial_stimuli[0];
+        }
+        else if ($scope.inst_id >= 3) {
+          $scope.active_stim = $scope.tutorial_stimuli[1];
+        }
+      }
+      else {
+        $scope.active_stim = $scope.stimuli_set[$scope.stim_id];
+      }
       $scope.initializeGrid();
       $scope.generateFlasks();
       $scope.initializeFlasks();

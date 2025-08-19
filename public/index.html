@@ -68,12 +68,12 @@
       </div>
       
       <!-- Grid -->
-        <div ng-hide="section == 'instructions' && inst_id != 2 && inst_id != 1 || section == 'endscreen'" ng-show="section == 'stimuli" class="grid-container" id="grid" ng-init="initGridContainer()"></div>
+      <div ng-hide="section == 'instructions' && inst_id != 2 && inst_id != 1 && inst_id != 3 || section == 'endscreen'" ng-show="section == 'stimuli" class="grid-container" id="grid" ng-init="initGridContainer()"></div>
       <p class="section_title" ng-show="section == 'instructions' && instruction_has_image()">Tutorial</p>
       <div class="section_title" style="float: left;" ng-show="section == 'stimuli' && part_id >= 0" ng-cloak>
-        Round {{stim_id}}/{{stimuli_set.length}} </div>
+        Round {{stim_id + 1}}/{{stimuli_set.length - 1}} </div>
       <div class="section_title" style="float: left;" ng-show="section == 'stimuli' && part_id < 0" ng-cloak>
-        Round {{stim_id}}/{{stimuli_set.length}} </div>
+        Round {{stim_id + 1}}/{{stimuli_set.length - 1}} </div>
 
       <!-- Endscreen -->
       <div id="end" ng-show="section == 'endscreen'" class="full-row" ng-if="section == 'endscreen' && end_id == 0" ng-cloak>
@@ -95,6 +95,8 @@
       <div id="end" ng-show="section == 'endscreen'" class="full-row" ng-if="section == 'endscreen' && end_id == 2" ng-cloak>
         Thank you for your time :)
       </div>
+
+      <h1>{{active_stim.name}}</h1>
 
       <!-- Controls -->
       <div class="controls" ng-cloak>
@@ -134,11 +136,6 @@
         <div id="gt"></div>
       </div>
     </div>
-
-    <h1>Inst ID {{inst_id}}</h1>
-    <h1>Stim ID {{stim_id}}</h1>
-    <h1> Active Stim {{active_stim.name}}</h1>
-    <h1>Stim @ ID {{stimuli[stim_id].name}}</h1>
 
       <!-- Comprehension Questions -->
       <div ng-show="section == 'instructions' && instruction_has_question()" class="comprehension_question" ng-cloak>
