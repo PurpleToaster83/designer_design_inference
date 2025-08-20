@@ -554,7 +554,7 @@ experimentApp.controller('ExperimentController',
       {
         text: `Congratulations! You've finished the tutorial.
                <br><br>
-               You will now play the game for 10 different rounds.
+               You will now play the game for 12 different rounds.
                <br><br>
                Ready to start? Press <strong>Next</strong> to continue!`
       }
