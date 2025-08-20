@@ -70,8 +70,6 @@ experimentApp.controller('ExperimentController',
       "exam": NaN
     }
 
-    $scope.blah = 0;
-
     $scope.log = function (...args) {
       if ($location.search().debug == "true") {
         console.log(...args);
@@ -381,9 +379,6 @@ experimentApp.controller('ExperimentController',
 
     $scope.stimuli_set = [];
     $scope.set_stimuli = async function () {
-      // Use only the first stimulus (index 0) for testing
-      $scope.stimuli_set = [$scope.stimuli[0]];
-      $scope.log("Using first stimulus for testing: ", $scope.stimuli_set);
       // Production behavior: use stimuli_sets for indexing
       let stim_idx = [];
       let count = await $scope.get_counter();
@@ -391,7 +386,7 @@ experimentApp.controller('ExperimentController',
 
       $scope.log("stimuli idx = ", stim_idx);
       for (i = 0; i < stim_idx.length; i++) {
-        $scope.stimuli_set.push($scope.stimuli[stim_idx[i] - 1]);
+        $scope.stimuli_set.push($scope.stimuli[stim_idx[i]]);
       }
       // $scope.stimuli_set = $scope.array_shuffle($scope.stimuli_set);
       $scope.log("stimuli ", $scope.stimuli_set);
@@ -775,7 +770,7 @@ experimentApp.controller('ExperimentController',
         "name": "3_1",
         "gridSize": [6, 8],
         "targetSquares": [
-          {row: 4, col: 7},
+          {row: 3, col: 7},
           {row: 5, col: 2},
         ],
         "wallSquares": [
@@ -804,9 +799,9 @@ experimentApp.controller('ExperimentController',
         "name": "3_2",
         "gridSize": [6, 8],
         "targetSquares": [
-          {row: 4, col: 7},
+          {row: 3, col: 7},
           {row: 5, col: 2},
-          {row: 0, col: 2}
+          {row: 2, col: 0}
         ],
         "wallSquares": [
           {row: 1, col: 2},
@@ -834,9 +829,9 @@ experimentApp.controller('ExperimentController',
         "name": "3_3",
         "gridSize": [6, 8],
         "targetSquares": [
-          {row: 4, col: 7},
+          {row: 3, col: 7},
           {row: 5, col: 2},
-          {row: 0, col: 2}
+          {row: 2, col: 0}
         ],
         "wallSquares": [
           {row: 1, col: 2},
@@ -865,10 +860,10 @@ experimentApp.controller('ExperimentController',
         "name": "3_4",
         "gridSize": [6, 8],
         "targetSquares": [
-          {row: 4, col: 7},
+          {row: 3, col: 7},
           {row: 5, col: 2},
-          { row: 0, col: 2 },
-          {row: 0, col: 4}
+          { row: 2, col: 0 },
+          {row : 4, col: 0}
         ],
         "wallSquares": [
           {row: 1, col: 2},
@@ -1108,17 +1103,16 @@ $scope.submitAssignment = function () {
 }
     
     $scope.initGridContainer = async function () {
-      if ($scope.section == 'instructions') {
-        if ($scope.inst_id <= 2) {
-          $scope.active_stim = $scope.tutorial_stimuli[0];
-        }
-        else if ($scope.inst_id >= 3) {
-          $scope.active_stim = $scope.tutorial_stimuli[1];
-        }
+      if ($scope.inst_id <= 2) {
+        $scope.active_stim = $scope.tutorial_stimuli[0];
+      }
+      else if ($scope.inst_id == 3) {
+        $scope.active_stim = $scope.tutorial_stimuli[1];
       }
       else {
         $scope.active_stim = $scope.stimuli_set[$scope.stim_id];
       }
+
       $scope.initializeGrid();
       $scope.generateFlasks();
       $scope.initializeFlasks();
