@@ -96,8 +96,6 @@
         Thank you for your time :)
       </div>
 
-      <h1>{{active_stim.name}}</h1>
-
       <!-- Controls -->
       <div class="controls" ng-cloak>
         <button class="button" ng-click="advance()" ng-hide="section == 'stimuli' && part_id <= 0 || (!hide_questions() && has_belief_question()) || end_id == 2"
@@ -109,7 +107,6 @@
           Next&ensp;▶
         </button>
       </div>
-
     </div>
 
     <!-- Right Side -->
@@ -131,7 +128,7 @@
         <button class="reset-button" ng-click="resetAssignments()">Reset All</button>
         <button class="submit-button" ng-click="submitAssignment()">Submit Layout</button>
       </div>
-      <div ng-show="inst_id == 2 || section == 'stimuli'" class="ground-truth" id="ground-truth">
+      <div ng-show="inst_id == 2 || inst_id == 3 || section == 'stimuli'" class="ground-truth" id="ground-truth">
         <h2><u>Ground Truth</u></h2>
         <div id="gt"></div>
       </div>

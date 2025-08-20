@@ -70,6 +70,8 @@ experimentApp.controller('ExperimentController',
       "exam": NaN
     }
 
+    $scope.blah = 0;
+
     $scope.log = function (...args) {
       if ($location.search().debug == "true") {
         console.log(...args);
@@ -207,7 +209,7 @@ experimentApp.controller('ExperimentController',
         }
         // Increment instruction counter
         $scope.inst_id = $scope.inst_id + 1;
-
+        
         // Delay RHS display
         if ($scope.instructions[$scope.inst_id].delay > 0) {
           $scope.show_rhs = false;
