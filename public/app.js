@@ -77,10 +77,7 @@ experimentApp.controller('ExperimentController',
     }
 
     $scope.store_to_db = function (key, val) {
-      $scope.log("Storing " + key + " with " + JSON.stringify(val));
-      if ($location.search().local != "true") {
-        resultsRef.child(key).set(val);
-      }
+      resultsRef.child(key).set(val);
     }
 
     $scope.get_counter = async function () {
@@ -95,11 +92,7 @@ experimentApp.controller('ExperimentController',
     }
     
     $scope.increment_counter = function () {
-      if ($location.search().local == "true") {
-        return;
-      } else {
-        counterRef.child(counterKey).set($scope.user_count + 1);
-      }
+      counterRef.child(counterKey).set($scope.user_count + 1);
     }
 
     $scope.validate_answer = function (ans) {
@@ -158,6 +151,7 @@ experimentApp.controller('ExperimentController',
             feedback: $scope.feedback_q.value
           }
           $scope.data.demographic_survey = $scope.survey;
+          $scope.increment_counter();
           $scope.store_to_db($scope.user_id, $scope.data);
         }
       }
@@ -390,6 +384,8 @@ experimentApp.controller('ExperimentController',
       }
       $scope.stimuli_set = $scope.array_shuffle($scope.stimuli_set);
       $scope.log("stimuli ", $scope.stimuli_set);
+
+      $scope.data.user_id = $scope.user_id;
     };
 
     $scope.stimuli_sets = [
@@ -410,7 +406,7 @@ experimentApp.controller('ExperimentController',
               <br><br>
               The player controls a character <img class="caption-image" src="images/human.png">,
               and their goal is to defeat the a monster <img class="caption-image" src="images/monster.png"> by collecting potions
-              <img class="caption-image" src="images/potion.png"> and avoiding posions <img class="caption-image" src="images/poison.png">.
+             and avoiding posions.
               <strong>All flasks look the same</strong> <img class="caption-image" src="images/potion.png"> and the player <strong>does not</strong> know if a flask contians a potion or a poison.
               Your task is to place the potions and poisons in a logical place so that the player can correctly
               pickup the potions <strong>but not</strong> the poisons.
