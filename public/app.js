@@ -388,7 +388,7 @@ experimentApp.controller('ExperimentController',
       for (i = 0; i < stim_idx.length; i++) {
         $scope.stimuli_set.push($scope.stimuli[stim_idx[i]]);
       }
-      // $scope.stimuli_set = $scope.array_shuffle($scope.stimuli_set);
+      $scope.stimuli_set = $scope.array_shuffle($scope.stimuli_set);
       $scope.log("stimuli ", $scope.stimuli_set);
     };
 
@@ -787,7 +787,7 @@ experimentApp.controller('ExperimentController',
           {row: 4, col: 6},
           {row: 4, col: 7},
         ],
-        "monster": {row: 6, col: 7},
+        "monster": {row: 5, col: 7},
         "player": {row: 0, col: 1},
         "flasks": 2,
         "ground_truth": [
@@ -817,7 +817,7 @@ experimentApp.controller('ExperimentController',
           {row: 4, col: 6},
           {row: 4, col: 7},
         ],
-        "monster": {row: 6, col: 7},
+        "monster": {row: 5, col: 7},
         "player": {row: 0, col: 1},
         "flasks": 2,
         "ground_truth": [
@@ -847,7 +847,7 @@ experimentApp.controller('ExperimentController',
           {row: 4, col: 6},
           {row: 4, col: 7},
         ],
-        "monster": {row: 6, col: 7},
+        "monster": {row: 5, col: 7},
         "player": {row: 0, col: 1},
         "flasks": 3,
         "ground_truth": [
@@ -879,7 +879,7 @@ experimentApp.controller('ExperimentController',
           {row: 4, col: 6},
           {row: 4, col: 7},
         ],
-        "monster": {row: 6, col: 7},
+        "monster": {row: 5, col: 7},
         "player": {row: 0, col: 1},
         "flasks": 3,
         "ground_truth": [
