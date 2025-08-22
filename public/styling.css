@@ -242,7 +242,6 @@ h1 {
     margin-bottom: 20px;
     width: 100%;
     max-width: 500px;
-    aspect-ratio: 1; /*change this to be dynamic*/
 }
 
 .grid-cell {
@@ -253,6 +252,7 @@ h1 {
     justify-content: center;
     position: relative;
     transition: all 0.3s ease;
+    aspect-ratio: 1;
 }
 
 .grid-cell.target {
