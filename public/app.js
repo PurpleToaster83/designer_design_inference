@@ -61,7 +61,8 @@ experimentApp.controller('ExperimentController',
       "images/potionC.png",
       "images/potionD.png",
     ];
-    $scope.gt = document.getElementById('gt');
+    $scope.gt = document.getElementById('statement-container');
+
     $scope.active_stim = NaN;
     $scope.data = {
       "user_id": NaN,
@@ -1136,7 +1137,10 @@ $scope.submitAssignment = function () {
         
         $scope.flasksContainer.appendChild($scope.flask);
 
-        $scope.gt.innerHTML += `${$scope.active_stim.ground_truth[index]}<br><br>`;
+        $scope.truth = document.createElement('div');
+        $scope.truth.innerHTML = `${$scope.active_stim.ground_truth[index]}`;
+        $scope.truth.className = 'gt-statement';
+        $scope.gt.appendChild($scope.truth);
       }
       // Reinitialize flask event listeners
       $scope.initializeFlasks();
