@@ -294,6 +294,7 @@ h1 {
     flex-direction: column;
     gap: 15px;
     margin-bottom: 30px;
+    align-items: center;
 }
 
 .flask {
