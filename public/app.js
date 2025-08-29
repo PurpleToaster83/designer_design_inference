@@ -403,22 +403,18 @@ experimentApp.controller('ExperimentController',
               Press <strong>Next</strong> to continue.`,
       },
       {
-        text: `You're currently looking at an empty map that you, the designer, must set up.
+        text: `You're watching a game scenario on the left. There is a knight <img class="caption-image" src="images/human.png"> trying to defeat a monster <img class="caption-image" src="images/monster.png">. The black tiles on the map represent walls which cannot be passed through. there are two kinds of flasks in the game: a health potion or a poison. The flasks containing potions look identical to the flasks containing poisons and the flasks can only be placed in the orange tiles.
               <br><br>
-              The player controls a character <img class="caption-image" src="images/human.png">,
-              and their goal is to defeat the a monster <img class="caption-image" src="images/monster.png"> by collecting potions
-             and avoiding posions.
-              <strong>All flasks look the same</strong> <img class="caption-image" src="images/potion.png"> and the player <strong>does not</strong> know if a flask contians a potion or a poison.
-              Your task is to place the potions and poisons in a logical place so that the player can correctly
-              pickup the potions <strong>but not</strong> the poisons.
+              
+            The chance of defeating the Monster is improved by consuming a potion, and diminishes by consuming a poison. To help the Knight defeat the Monster, you, a helpful Wizard, is tasked to place the flasks on the map. You cannot remove any flasks from the game.
               
               <br><br>
               The rules of the game are as follows:
               <br>
               <ul>
-              <li> Flasks must be placed in one of the orange squares on the map.</li>
+              <li> Flasks must be placed in one of the orange tiles on the map.</li>
               <li> <strong>All</strong> available flasks must be placed.</li>
-              <li> All squares <strong>do not</strong> need to be filled.</li>
+              <li> There could be more orange tiles than flasks.</li>
               <li> You may reset the active map at any time using the <strongreset</strong> button.</li>
               <li> Once you have finished designing a map, press the <strong>submit</strong> button.</li>
               <li> The player <strong>does not</strong> know what's in each flask.</li>
@@ -453,7 +449,7 @@ experimentApp.controller('ExperimentController',
         image: "images/poison.png",
       },
       {
-        text: `You've now finished the practice round and the player can fight the monster using the potions and poisons you've collected!`
+        text: `You've now finished the practice round and the knight can now fight the monster using the potions and poisons you've placed!`
       },
       {
         text: `<strong>Comprehension Questions</strong> <br>
@@ -465,7 +461,7 @@ experimentApp.controller('ExperimentController',
               `
       },
       {
-        text: `<strong>Question 1/5:</strong> To the <strong>player</strong>, how do the flasks look?`,
+        text: `<strong>Question 1/4:</strong> To the <strong>knight</strong>, how do the flasks look?`,
         options: ["The potions are purple and the poisons are green",
                   "They all look the same",
                   "The flasks are labeled based on their liquid content"],
@@ -473,7 +469,7 @@ experimentApp.controller('ExperimentController',
         exam: true
       },
       {
-        text: `<strong>Question 1/5:</strong> To the <strong>player</strong>, how do the flasks look?`,
+        text: `<strong>Question 1/4:</strong> To the <strong>knight</strong>, how do the flasks look?`,
         options: ["The potions are purple and the poisons are green",
                   "They all look the same",
                   "The flasks are labeled based on their liquid content"],
@@ -481,39 +477,39 @@ experimentApp.controller('ExperimentController',
         feedback: true
       },
       {
-        text: `<strong>Question 2/5:</strong> What is your task in this game?`,
-        options: ["Place the flasks in a logical and helpful manner",
-                  "Explore the map",
+        text: `<strong>Question 2/4:</strong> What is your task in this game?`,
+        options: ["Place the flasks in a logical and helpful manner to help the knight",
+                  "Control the knight to defeat the monster",
                   "Guess the identity of the liquid in each flask"],
         answer: 0,
         exam: true
       },
       {
-        text: `<strong>Question 2/5:</strong> What is your task in this game?`,
-        options: ["Place the flasks in a logical and helpful manner",
-                  "Explore the map",
+        text: `<strong>Question 2/4:</strong> What is your task in this game?`,
+        options: ["Place the flasks in a logical and helpful manner to help the knight",
+                  "Control the knight to defeat the monster",
                   "Guess the identity of the liquid in each flask"],
         answer: 0,
         feedback: true
       },
       {
-        text: `<strong>Question 3/5:</strong> Which of the following is true?`,
-        options: ["The player has <strong> no definite knowledge </strong> about the contents of each flask.",
+        text: `<strong>Question 3/4:</strong> Which of the following is true?`,
+        options: ["The player has <strong> no prior knowledge </strong> about the contents of each flask.",
           "The player <strong> knows perfectly </strong> what's inside each flask.",
           "The player <strong> might know exactly </strong> what's in each flask, but <strong> might also be unsure. </strong>"],
         answer: 0,
         exam: true
       },
       {
-        text: `<strong>Question 3/5:</strong> Which of the following is true?`,
-        options: ["The player has <strong> no definite knowledge </strong> about the contents of each flask.",
+        text: `<strong>Question 3/4:</strong> Which of the following is true?`,
+        options: ["The player has <strong> no prior knowledge </strong> about the contents of each flask.",
           "The player <strong> knows perfectly </strong> what's inside each flask.",
           "The player <strong> might know exactly </strong> what's in each flask, but <strong> might also be unsure. </strong>"],
         answer: 0,
         feedback: true
       },
       {
-        text: `<strong>Question 4/5:</strong> Which of the following is true?`,
+        text: `<strong>Question 4/4:</strong> Which of the following is true?`,
         options: ["You should place the flasks randomly and haphazardly.",
                   "You should place the flasks so that the player can distinguish between potions and poisons",
                   "The flasks are all potions."],
@@ -521,27 +517,11 @@ experimentApp.controller('ExperimentController',
         exam: true
       },
       {
-        text: `<strong>Question 4/5:</strong> Which of the following is true?`,
+        text: `<strong>Question 4/4:</strong> Which of the following is true?`,
         options: ["You should place the flasks randomly and haphazardly.",
                   "You should place the flasks so that the player can distinguish between potions and poisons",
                   "The flasks are all potions."],
         answer: 1,
-        feedback: true
-      },
-      {
-        text: `<strong>Question 5/5:</strong> How can you tell what liquid is in the flask?`,
-        options: ["You can not tell the type of liquid in the flask",
-                  "The liquid type is explicitly stated on the flask itself",
-                  "There is an answer key next to the potion sidebar"],
-        answer: 2,
-        exam: true
-      },
-      {
-        text: `<strong>Question 5/5:</strong> How can you tell what liquid is in the flask?`,
-        options: ["You can not tell the type of liquid in the flask",
-                  "The liquid type is explicitly stated on the flask itself",
-                  "There is an answer key next to the potion sidebar"],
-        answer: 2,
         feedback: true
       },
       {
