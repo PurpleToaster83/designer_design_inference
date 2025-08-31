@@ -403,10 +403,10 @@ experimentApp.controller('ExperimentController',
               Press <strong>Next</strong> to continue.`,
       },
       {
-        text: `You're watching a game scenario on the left. There is a knight <img class="caption-image" src="images/human.png"> trying to defeat a monster <img class="caption-image" src="images/monster.png">. The black tiles on the map represent walls which cannot be passed through. there are two kinds of flasks in the game: a health potion or a poison. The flasks containing potions look identical to the flasks containing poisons and the flasks can only be placed in the orange tiles.
+        text: `You're watching a game scenario on the left. There is a knight <img class="caption-image" src="images/human.png"> trying to defeat a monster <img class="caption-image" src="images/monster.png">. The black tiles on the map represent walls which cannot be passed through. there are two kinds of flasks <img class="caption-image" src="images/potion.png"> in the game: a health potion or a poison. The flasks containing potions look identical to the flasks containing poisons and the flasks can only be placed in the orange tiles.
               <br><br>
               
-            The chance of defeating the Monster is improved by consuming a potion, and diminishes by consuming a poison. To help the Knight defeat the Monster, you, a helpful Wizard, is tasked to place the flasks on the map. You cannot remove any flasks from the game.
+            The chance of the knight defeating the Monster is improved by consuming a potion, and diminishes by consuming a poison. To help the Knight defeat the Monster, you, a helpful Wizard, is tasked to place some flasks on the map. You cannot remove any flasks from the game.
               
               <br><br>
               The rules of the game are as follows:
@@ -427,7 +427,7 @@ experimentApp.controller('ExperimentController',
         image: "images/poison.png"
       },
       {
-        text: `Please look at the following map and place the flasks appropriatly<br>
+        text: `Please look at the following map and place the flasks appropriatly. You can do so by dragging the flasks and dropping them onto the orange tiles.<br>
               <br>
               press the <strong>submit</strong> button when you have finished`,
         tutorial: true,
@@ -438,7 +438,7 @@ experimentApp.controller('ExperimentController',
         image: "images/poison.png",
       },
       {
-        text: `Please look at this similar map that is missing one of the yelow squares and place the flasks appropriatly<br>
+        text: `Now take a look at this new game level. Notice that we have only 2 orange tiles now while we still need to place 2 flasks below. Please place the flasks appropriatly to help the knight.<br>
               <br>
               press the <strong>submit</strong> button when you have finished`,
         tutorial: true,
