@@ -329,7 +329,7 @@ experimentApp.controller('ExperimentController',
 
     $scope.cur_stim_image = function () {
       if ($scope.section != "stimuli" || $scope.stim_id < 0) {
-        return "images/poison.png"
+        return "images/key.png"
       } else if ($scope.part_id < 0) {
         return $scope.stimuli_set[$scope.stim_id - 1].images.slice(-1)[0]
       } else if ($scope.replaying) {
@@ -396,46 +396,48 @@ experimentApp.controller('ExperimentController',
     $scope.stimuli_set_length = $scope.stimuli_sets[0].length;
     $scope.instructions = [
       {
-        text: `Welcome to our flask placement game!
+        text: `Welcome to our key placement game!
               <br><br>
               Before you begin your task, you'll complete a brief guided tutorial (~ 2 minutes) to understand the game.
               <br><br>
               Press <strong>Next</strong> to continue.`,
       },
       {
-        text: `You're watching a game scenario on the left. There is a knight <img class="caption-image" src="images/human.png"> trying to defeat a monster <img class="caption-image" src="images/monster.png">. The black tiles on the map represent walls which cannot be passed through. there are two kinds of flasks <img class="caption-image" src="images/potion.png"> in the game: a health potion or a poison. The flasks containing potions look identical to the flasks containing poisons and the flasks can only be placed in the orange tiles.
+        text: `You're watching a game scenario on the left. There is an Adventurer <img class="caption-image" src="images/human.png"> that is trying to collect fruit <img class="caption-image" src="images/banana.png">, <img class="caption-image" src="images/berry.png">, <img class="caption-image" src="images/orange.png">.
+              The black tiles represent walls which cannot be passed through.
+              The fruits may be locked behind doors <img class="caption-image" src="images/door.png">, which can only be unlocked with a specific key <img class="caption-image" src="images/key.png">.
+              The keys can only be placed in purple trays <img class="caption-image" src="images/tray.png">. The Adventurer does not know what key unlocks which door.
               <br><br>
               
-            The chance of the knight defeating the Monster is improved by consuming a potion, and diminishes by consuming a poison. To help the Knight defeat the Monster, you, a helpful Wizard, is tasked to place some flasks on the map. You cannot remove any flasks from the game.
+              To help the Adventurer collec the fruit, you, a helpful room designer, is tasked to place keys on the map. You cannot remove any keys from the game.
               
               <br><br>
               The rules of the game are as follows:
               <br>
               <ul>
-              <li> Flasks must be placed in one of the orange tiles on the map.</li>
-              <li> <strong>All</strong> available flasks must be placed.</li>
-              <li> There could be more orange tiles than flasks.</li>
+              <li> Keys must be placed in one of the purple trays on the map.</li>
+              <li> <strong>All</strong> available keys must be placed.</li>
+              <li> There could be more purple trays than keys.</li>
               <li> You may reset the active map at any time using the <strongreset</strong> button.</li>
               <li> Once you have finished designing a map, press the <strong>submit</strong> button.</li>
-              <li> The player <strong>does not</strong> know what's in each flask.</li>
+              <li> The player <strong>does not</strong> know what each key does.</li>
               </ul>
-              Your task is to place the potions in a location that you think will be <strong>helpful and logical</strong> to the player while placing the poisons in locations that the player would know to <strong>avoid</strong> them
+              Your task is to place the keys in a location that you think will be <strong>helpful and logical</strong> to the player so that they can unlock the cooresponding door for <strong>each</strong> key
               based on the player being rational.<br>
               <br>
               Press the <strong>Next</strong> button to continue.
               `,
-        image: "images/poison.png"
+        image: "images/key.png"
       },
       {
-        text: `Please look at the following map and place the flasks appropriatly. You can do so by dragging the flasks and dropping them onto the orange tiles.<br>
+        text: `Please look at the following map and place the keys appropriatly. You can do so by dragging the keys and dropping them onto the purple trays.<br>
               <br>
               press the <strong>submit</strong> button when you have finished`,
         tutorial: true,
         show_questions: true,
         question_types: ["beliefs"],
-        statements: ["Flask <strong>A</strong> is: ",
-          "Flask <strong>B</strong> is:"],
-        image: "images/poison.png",
+        statements: ["<strong>Key A</strong> unlocks <strong>Door 1</strong>"],
+        image: "images/key.png",
       },
       {
         text: `Now take a look at this new game level. Notice that we have only 2 orange tiles now while we still need to place 2 flasks below. Please place the flasks appropriatly to help the knight.<br>
@@ -446,7 +448,7 @@ experimentApp.controller('ExperimentController',
         question_types: ["beliefs"],
         statements: ["Flask <strong>A</strong> is: ",
           "Flask <strong>B</strong> is:"],
-        image: "images/poison.png",
+        image: "images/key.png",
       },
       {
         text: `You've now finished the practice round and the knight can now fight the monster using the potions and poisons you've placed!`
@@ -550,321 +552,23 @@ experimentApp.controller('ExperimentController',
     $scope.tutorial_stimuli = [
       {
         "name": "tutorial1",
-        "gridSize": [7, 7],
-        "targetSquares": [
-          { row: 0, col: 1 },
-          { row: 5, col: 0 },
-          { row: 2, col: 3 },
+        "gridSize": [3, 8],
+        "trays": [
+          {row: 2, col: 0},
+          {row: 0, col: 5}
         ],
         "wallSquares": [
-          { row: 4, col: 2 },
-          { row: 4, col: 3 },
-          { row: 4, col: 4 },
-          { row: 4, col: 5 },
-          { row: 4, col: 6 }
-        ],
-        "monster": {row: 1, col: 6},
-        "player": { row: 6, col: 6 },
-        "flasks": 2,
-        "ground_truth": [
-          "A is a Potion",
-          "B is a Poison"
-        ]
-      },
-      {
-        "name": "tutorial2",
-        "gridSize": [7, 7],
-        "targetSquares": [
-          { row: 0, col: 1 },
-          { row: 5, col: 0 }
-        ],
-        "wallSquares": [
-          { row: 4, col: 2 },
-          { row: 4, col: 3 },
-          { row: 4, col: 4 },
-          { row: 4, col: 5 },
-          { row: 4, col: 6 }
-        ],
-        "monster": {row: 1, col: 6},
-        "player": { row: 6, col: 6 },
-        "flasks": 2,
-        "ground_truth": [
-          "A is a Potion",
-          "B is a Potion"
-        ]
-      },  
-    ]
-
-    $scope.stimuli = [
-      {
-        "name": "1_1",
-        "gridSize": [7, 7],
-        "targetSquares": [
-          { row: 0, col: 6},
-          { row: 2, col: 3}
-        ],
-        "wallSquares": [
-          { row: 3, col: 3 },
-          { row: 4, col: 3 },
-          { row: 5, col: 3 },
-          { row: 6, col: 3 }
-        ],
-        "monster": {row: 5, col: 6},
-        "player": { row: 3, col: 1 },
-        "flasks": 1,
-        "ground_truth": [
-          "A is a Poison",
-        ]
-      },
-      {
-        "name": "1_2",
-        "gridSize": [7, 7],
-        "targetSquares": [
-          { row: 0, col: 6},
-          { row: 2, col: 3}
-        ],
-        "wallSquares": [
-          { row: 3, col: 3 },
-          { row: 4, col: 3 },
-          { row: 5, col: 3 },
-          { row: 6, col: 3 }
-        ],
-        "monster": {row: 5, col: 6},
-        "player": { row: 3, col: 0},
-        "flasks": 1,
-        "ground_truth": [
-          "A is a Potion",
-        ]
-      },
-      {
-        "name": "1_3",
-        "gridSize": [7, 7],
-        "targetSquares": [
-          { row: 2, col: 3}
-        ],
-        "wallSquares": [
-          { row: 3, col: 3 },
-          { row: 4, col: 3 },
-          { row: 5, col: 3 },
-          { row: 6, col: 3 }
-        ],
-        "monster": {row: 5, col: 6},
-        "player": { row: 3, col: 0},
-        "flasks": 1,
-        "ground_truth": [
-          "A is a Poison",
-        ]
-      },
-      {
-        "name": "1_4",
-        "gridSize": [7, 7],
-        "targetSquares": [
-          { row: 0, col: 6}
-        ],
-        "wallSquares": [
-          { row: 3, col: 3 },
-          { row: 4, col: 3 },
-          { row: 5, col: 3 },
-          { row: 6, col: 3 }
-        ],
-        "monster": {row: 5, col: 6},
-        "player": { row: 3, col: 0},
-        "flasks": 1,
-        "ground_truth": [
-          "A is a Potion",
-        ]
-      },
-      {
-        "name": "2_1",
-        "gridSize": [7, 7],
-        "targetSquares": [
-          { row: 0, col: 1},
-          { row: 2, col: 0},
-          { row: 4, col: 3},
-          { row: 4, col: 6}
-        ],
-        "wallSquares": [],
-        "monster": {row: 6, col: 3},
-        "player": { row: 2, col: 3},
-        "flasks": 2,
-        "ground_truth": [
-          "A is a Potion",
-          "B is a Poison"
-        ]
-      },
-      {
-        "name": "2_2",
-        "gridSize": [7, 7],
-        "targetSquares": [
-          { row: 0, col: 1},
-          { row: 2, col: 0},
-          { row: 4, col: 3},
-          { row: 4, col: 6}
-        ],
-        "wallSquares": [],
-        "monster": {row: 6, col: 3},
-        "player": { row: 2, col: 3},
-        "flasks": 2,
-        "ground_truth": [
-          "A is a Poison",
-          "B is a Poison"
-        ]
-      },
-      {
-        "name": "2_3",
-        "gridSize": [7, 7],
-        "targetSquares": [
-          { row: 4, col: 3},
-          { row: 4, col: 6}
-        ],
-        "wallSquares": [],
-        "monster": {row: 6, col: 3},
-        "player": { row: 2, col: 3},
-        "flasks": 2,
-        "ground_truth": [
-          "A is a Potion",
-          "B is a Poison"
-        ]
-      },
-      {
-        "name": "2_4",
-        "gridSize": [7, 7],
-        "targetSquares": [
-          { row: 0, col: 1},
-          { row: 4, col: 3},
-          { row: 4, col: 6}
-        ],
-        "wallSquares": [],
-        "monster": {row: 6, col: 3},
-        "player": { row: 2, col: 3},
-        "flasks": 2,
-        "ground_truth": [
-          "A is a Potion",
-          "B is a Potion"
-        ]
-      },
-      {
-        "name": "3_1",
-        "gridSize": [6, 8],
-        "targetSquares": [
-          {row: 3, col: 7},
-          {row: 5, col: 2},
-        ],
-        "wallSquares": [
-          {row: 1, col: 2},
-          {row: 1, col: 3},
-          {row: 1, col: 4},
-          {row: 1, col: 5},
+          {row: 0, col: 6},
           {row: 1, col: 6},
-          {row: 1, col: 7},
-          {row: 4, col: 2},
-          {row: 4, col: 3},
-          {row: 4, col: 4},
-          {row: 4, col: 5},
-          {row: 4, col: 6},
-          {row: 4, col: 7},
         ],
-        "monster": {row: 5, col: 7},
-        "player": {row: 0, col: 1},
-        "flasks": 2,
-        "ground_truth": [
-          "A is a Poison",
-          "B is a Poison"
-        ]
+        "doorSqaures": [
+          {row: 1, col: 7}
+        ],
+        "fruit": {row: 0, col: 7},
+        "player": {row: 0, col: 0},
+        "keys": 1,
+        "ground_truth": ["Unlocks Door 1"]
       },
-      {
-        "name": "3_2",
-        "gridSize": [6, 8],
-        "targetSquares": [
-          {row: 3, col: 7},
-          {row: 5, col: 2},
-          {row: 2, col: 0}
-        ],
-        "wallSquares": [
-          {row: 1, col: 2},
-          {row: 1, col: 3},
-          {row: 1, col: 4},
-          {row: 1, col: 5},
-          {row: 1, col: 6},
-          {row: 1, col: 7},
-          {row: 4, col: 2},
-          {row: 4, col: 3},
-          {row: 4, col: 4},
-          {row: 4, col: 5},
-          {row: 4, col: 6},
-          {row: 4, col: 7},
-        ],
-        "monster": {row: 5, col: 7},
-        "player": {row: 0, col: 1},
-        "flasks": 2,
-        "ground_truth": [
-          "A is a Poison",
-          "B is a Poison"
-        ]
-      },
-      {
-        "name": "3_3",
-        "gridSize": [6, 8],
-        "targetSquares": [
-          {row: 3, col: 7},
-          {row: 5, col: 2},
-          {row: 2, col: 0}
-        ],
-        "wallSquares": [
-          {row: 1, col: 2},
-          {row: 1, col: 3},
-          {row: 1, col: 4},
-          {row: 1, col: 5},
-          {row: 1, col: 6},
-          {row: 1, col: 7},
-          {row: 4, col: 2},
-          {row: 4, col: 3},
-          {row: 4, col: 4},
-          {row: 4, col: 5},
-          {row: 4, col: 6},
-          {row: 4, col: 7},
-        ],
-        "monster": {row: 5, col: 7},
-        "player": {row: 0, col: 1},
-        "flasks": 3,
-        "ground_truth": [
-          "A is a Potion",
-          "B is a Potion",
-          "C is a Potion"
-        ]
-      },
-      {
-        "name": "3_4",
-        "gridSize": [6, 8],
-        "targetSquares": [
-          {row: 3, col: 7},
-          {row: 5, col: 2},
-          { row: 2, col: 0 },
-          {row : 4, col: 0}
-        ],
-        "wallSquares": [
-          {row: 1, col: 2},
-          {row: 1, col: 3},
-          {row: 1, col: 4},
-          {row: 1, col: 5},
-          {row: 1, col: 6},
-          {row: 1, col: 7},
-          {row: 4, col: 2},
-          {row: 4, col: 3},
-          {row: 4, col: 4},
-          {row: 4, col: 5},
-          {row: 4, col: 6},
-          {row: 4, col: 7},
-        ],
-        "monster": {row: 5, col: 7},
-        "player": {row: 0, col: 1},
-        "flasks": 3,
-        "ground_truth": [
-          "A is a Potion",
-          "B is a Poison",
-          "C is a Potion"
-        ]
-      }
     ]
 
     // Initialize grid
@@ -880,7 +584,7 @@ experimentApp.controller('ExperimentController',
           $scope.cell.dataset.col = col;
               
           // Check if this cell is a target square
-          $scope.isTarget = $scope.active_stim.targetSquares.some(target => target.row === row && target.col === col);
+          $scope.isTarget = $scope.active_stim.trays.some(target => target.row === row && target.col === col);
           if ($scope.isTarget) {
             $scope.cell.classList.add('target');
           }
@@ -891,8 +595,14 @@ experimentApp.controller('ExperimentController',
             $scope.cell.classList.add('wall');
           }
 
+                    // Check if this cell is a wall square
+          $scope.isDoor = $scope.active_stim.doorSqaures.some(door => door.row === row && door.col === col);
+          if ($scope.isDoor) {
+            $scope.cell.classList.add('door');
+          }
+
           // Check if this cell is a monster
-          $scope.isMonster = $scope.active_stim.monster.row === row && $scope.active_stim.monster.col === col;
+          $scope.isMonster = $scope.active_stim.fruit.row === row && $scope.active_stim.fruit.col === col;
           if ($scope.isMonster) {
             $scope.cell.classList.add('monster');
           }
@@ -1042,7 +752,7 @@ experimentApp.controller('ExperimentController',
 
     $scope.updateStatus = async function () {
       $scope.status = document.getElementById('status');
-      $scope.status.textContent = `${$scope.assignedCount}/${$scope.active_stim.flasks} squares assigned`;
+      $scope.status.textContent = `${$scope.assignedCount}/${$scope.active_stim.keys} squares assigned`;
     }
 
     $scope.resetAssignments = function () {
@@ -1054,7 +764,7 @@ experimentApp.controller('ExperimentController',
     }
 
 $scope.submitAssignment = function () {
-  if ($scope.assignedCount < $scope.active_stim.flasks) {
+  if ($scope.assignedCount < $scope.active_stim.keys) {
     alert("Please assign all flasks before submitting.");
     return;
   }
@@ -1107,7 +817,7 @@ $scope.submitAssignment = function () {
 
       // Generate flasks based on the array
       $scope.gt.innerHTML = "";
-      for (index = 0; index < $scope.active_stim.flasks; index++) {
+      for (index = 0; index < $scope.active_stim.keys; index++) {
         $scope.flask = document.createElement('div');
 
         $scope.flask.className = `flask`;

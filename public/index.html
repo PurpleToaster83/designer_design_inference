@@ -3,7 +3,7 @@
 
 <head>
   <title>Designer Pragmatic Design Inferance</title>
-  <link rel="icon" type="image/x-icon" href="images/potion_fav.png">
+  <link rel="icon" type="image/x-icon" href="images/icon.png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="styling.css"
@@ -121,10 +121,9 @@
     <br>
 
     <div ng-show="(!hide_questions() && has_belief_question()) || section == 'stimuli'" class="sidebar">
-        Remember that the flasks all look identical to the knight.
       <div class="info-container">
         <div class="flask-info">
-          <h2><u>Available Flasks</u></h2>
+          <h2><u>Available Keys</u></h2>
           <div class="flasks-container" id="flasks-container"></div>
         </div>
         <div ng-show="inst_id == 2 || inst_id == 3 || section == 'stimuli'" class="ground-truth" id="ground-truth">
@@ -132,7 +131,7 @@
         </div>
       </div>
 
-      <div class="status" id="status">0/4 squares assigned</div>
+      <div class="status" id="status">0/4 keys assigned</div>
       <button class="reset-button" ng-click="resetAssignments()">Reset All</button>
       <button class="submit-button" ng-click="submitAssignment()">Submit Layout</button>
     </div>

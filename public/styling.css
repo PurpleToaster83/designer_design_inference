@@ -431,10 +431,10 @@ h1 {
 }
 
 .caption-image {
-    padding-top: 10px;
-    transform: translateY(7px);
-    width: 30px;
-    height: 30px;
+  display: inline;
+  height: 14pt;
+  width: 14pt;
+  vertical-align: text-bottom;
 }
 
 .grid-cell.wall {
@@ -449,8 +449,14 @@ h1 {
   border: 2px solid #333333;
 }
 
+.grid-cell.door {
+  background-image: url("images/door.png");
+  background-size: contain;
+  border: 2px solid #000000;
+}
+
 .grid-cell.monster {
-  background-image: url("images/monster.png");
+  background-image: url("images/banana.png");
   background-size: contain;
 }
 
