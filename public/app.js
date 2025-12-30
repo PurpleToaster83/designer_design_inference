@@ -70,8 +70,6 @@ experimentApp.controller('ExperimentController',
       "images/fruitThree.png"
     ]
 
-    $scope.gt = document.getElementById('statement-container');
-
     $scope.active_stim = NaN;
     $scope.data = {
       "user_id": NaN,
@@ -179,6 +177,10 @@ experimentApp.controller('ExperimentController',
         if (start_time == undefined) {
           start_time = (new Date()).getTime();
         }
+        // Reinitialize grid for stimuli
+        $timeout(function() {
+          $scope.initGridContainer();
+        }, 0);
       } else if ($scope.instructions[$scope.inst_id].exam_end) {
         // Store exam results for initial attempt
         if (!$scope.exam_done) {
@@ -211,6 +213,13 @@ experimentApp.controller('ExperimentController',
         }
         // Increment instruction counter
         $scope.inst_id = $scope.inst_id + 1;
+        
+        // Reinitialize grid for tutorial steps after incrementing
+        if ($scope.inst_id === 2 || $scope.inst_id === 3) {
+          $timeout(function() {
+            $scope.initGridContainer();
+          }, 100);
+        }
         
         // Delay RHS display
         if ($scope.instructions[$scope.inst_id].delay > 0) {
@@ -580,24 +589,28 @@ experimentApp.controller('ExperimentController',
         "keys": 1,
         "ground_truth": ["Unlocks Door 1"]
       },
-      // {
-      //   "name": "tutorial2",
-      //   "gridSize": [3, 8],
-      //   "trays": [
-      //     { row: 0, col: 5 }
-      //   ],
-      //   "wallSquares": [
-      //     { row: 0, col: 6 },
-      //     { row: 1, col: 6 }
-      //   ],
-      //   "doorSquares": [
-      //     { row: 1, col: 7 }
-      //   ],
-      //   "fruit": { row: 0, col: 7 },
-      //   "player": { row: 0, col: 0 },
-      //   "keys": 1,
-      //   "ground_truth": ["Unlocks Door 1"]
-      // },
+      {
+        "name": "tutorial2",
+        "gridSize": [3, 8],
+        "trays": [
+          { row: 0, col: 5 }
+        ],
+        "wallSquares": [
+          { row: 0, col: 6 },
+          { row: 1, col: 6 }
+        ],
+        "doorSquares": [
+          { row: 1, col: 7 }
+        ],
+        "fruit": [
+          { row: 0, col: 7 }
+        ],
+        "player": { row: 0, col: 0 },
+        "keys": 1,
+        "ground_truth": ["Unlocks Door 1"]
+      },
+
+      //TODO: put all the maps here + fix load problem with initGridContainer()
     ]
 
     // Initialize grid
@@ -807,31 +820,25 @@ experimentApp.controller('ExperimentController',
       });
     }
 
-$scope.submitAssignment = function () {
-  if ($scope.assignedCount < $scope.active_stim.keys) {
-    alert("Please assign all flasks before submitting.");
-    return;
-  }
-  
-  // Store current assignment
-  $scope.data.assignments[$scope.active_stim.name] = $scope.assignments;
-  
-  // Move to next stimulus
-  $scope.advance()
-  
-  // Check if we've completed all stimuli
-  if ($scope.stim_id >= $scope.stimuli_set.length) {
-    $scope.section = "endscreen";
-    return;
-  }
-  
-  // Reset assignments for new stimulus
-  $scope.assignments = {};
-  $scope.assignedCount = 0;
-  
-  // Reinitialize grid with new stimulus data
-  $scope.initGridContainer();
-}
+    $scope.submitAssignment = function () {
+      if ($scope.assignedCount < $scope.active_stim.keys) {
+        alert("Please assign all keys before submitting.");
+        return;
+      }
+      
+      console.log("Submitting assignment for:", $scope.active_stim.name);
+      
+      // Store current assignment
+      $scope.data.assignments[$scope.active_stim.name] = $scope.assignments;
+      
+      // Reset assignments for new stimulus
+      $scope.assignments = {};
+      $scope.assignedCount = 0;
+      
+      // Advance to next instruction
+      $scope.advance();
+      $scope.initGridContainer();
+    }
     
     $scope.initGridContainer = async function () {
       if ($scope.inst_id <= 2) {
@@ -860,7 +867,12 @@ $scope.submitAssignment = function () {
       const letters = ["A", "B", "C", "D"];
 
       // Generate flasks based on the array
-      $scope.gt.innerHTML = "";
+      // Get fresh reference to statement container
+      var statementContainer = document.getElementById('statement-container');
+      if (statementContainer) {
+        statementContainer.innerHTML = "";
+      }
+      
       for (index = 0; index < $scope.active_stim.keys; index++) {
         $scope.flask = document.createElement('div');
 
@@ -871,10 +883,12 @@ $scope.submitAssignment = function () {
         
         $scope.flasksContainer.appendChild($scope.flask);
 
-        $scope.truth = document.createElement('div');
-        $scope.truth.innerHTML = `${$scope.active_stim.ground_truth[index]}`;
-        $scope.truth.className = 'gt-statement';
-        $scope.gt.appendChild($scope.truth);
+        if (statementContainer) {
+          $scope.truth = document.createElement('div');
+          $scope.truth.innerHTML = `${$scope.active_stim.ground_truth[index]}`;
+          $scope.truth.className = 'gt-statement';
+          statementContainer.appendChild($scope.truth);
+        }
       }
       // Reinitialize flask event listeners
       $scope.initializeFlasks();
