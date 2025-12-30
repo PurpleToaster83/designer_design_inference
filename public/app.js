@@ -56,11 +56,20 @@ experimentApp.controller('ExperimentController',
     $scope.assignments = {};
     $scope.assignedCount = 0;
     $scope.img_url = [
-      "images/potionA.png",
-      "images/potionB.png",
-      "images/potionC.png",
-      "images/potionD.png",
+      "images/KeyA.png",
+      "images/KeyB.png",
     ];
+    $scope.door_img_url = [
+      "images/doorOne.png",
+      "images/doorTwo.png",
+      "images/doorThree.png",
+    ]
+    $scope.fruit_img_url = [
+      "images/fruitOne.png",
+      "images/fruitTwo.png",
+      "images/fruitThree.png"
+    ]
+
     $scope.gt = document.getElementById('statement-container');
 
     $scope.active_stim = NaN;
@@ -111,7 +120,7 @@ experimentApp.controller('ExperimentController',
       $scope.valid_exam = true;
     }
 
-    $scope.set_belief_statements = async function(stim_id) {
+    $scope.set_belief_statements = async function (stim_id) {
       if (stim_id < $scope.stimuli_set.length) {
         let cur_stim = $scope.stimuli_set[stim_id];
         if (cur_stim.statements) {
@@ -158,7 +167,7 @@ experimentApp.controller('ExperimentController',
       }
     };
     
-    $scope.advance_instructions = async function () {      
+    $scope.advance_instructions = async function () {
       if ($scope.inst_id == $scope.instructions.length - 1) {
         // Initialize stimuli section
         $scope.section = "stimuli";
@@ -229,7 +238,7 @@ experimentApp.controller('ExperimentController',
       if ($scope.stim_id == $scope.stimuli_set.length) {
         // Advance to endscreen
         $scope.section = "endscreen"
-        $scope.end_id = 0; 
+        $scope.end_id = 0;
       } else if ($scope.part_id < 0) {
         // Advance to first part
         $scope.part_id = $scope.part_id + 1;
@@ -403,7 +412,7 @@ experimentApp.controller('ExperimentController',
               Press <strong>Next</strong> to continue.`,
       },
       {
-        text: `You're watching a game scenario on the left. There is an Adventurer <img class="caption-image" src="images/human.png"> that is trying to collect fruit <img class="caption-image" src="images/banana.png">, <img class="caption-image" src="images/berry.png">, <img class="caption-image" src="images/orange.png">.
+        text: `You're watching a game scenario on the left. There is an Adventurer <img class="caption-image" src="images/human.png"> that is trying to collect fruit <img class="caption-image" src="images/fruitOne.png">, <img class="caption-image" src="images/fruitTwo.png">, <img class="caption-image" src="images/fruitThree.png">.
               The black tiles represent walls which cannot be passed through.
               The fruits may be locked behind doors <img class="caption-image" src="images/door.png">, which can only be unlocked with a specific key <img class="caption-image" src="images/key.png">.
               The keys can only be placed in purple trays <img class="caption-image" src="images/tray.png">. The Adventurer does not know what key unlocks which door.
@@ -440,7 +449,7 @@ experimentApp.controller('ExperimentController',
         image: "images/key.png",
       },
       {
-        text: `Now take a look at this new game level. Notice that we have only 2 orange tiles now while we still need to place 2 flasks below. Please place the flasks appropriatly to help the knight.<br>
+        text: `Now take a look at this new game level. Notice that now there is only one purple tray. Please place the key appropriatly to help the Adventurer.<br>
               <br>
               press the <strong>submit</strong> button when you have finished`,
         tutorial: true,
@@ -451,7 +460,7 @@ experimentApp.controller('ExperimentController',
         image: "images/key.png",
       },
       {
-        text: `You've now finished the practice round and the knight can now fight the monster using the potions and poisons you've placed!`
+        text: `You've now finished the practice round and can now place the keys for the Adventurer!`
       },
       {
         text: `<strong>Comprehension Questions</strong> <br>
@@ -463,66 +472,66 @@ experimentApp.controller('ExperimentController',
               `
       },
       {
-        text: `<strong>Question 1/4:</strong> To the <strong>knight</strong>, how do the flasks look?`,
-        options: ["The potions are purple and the poisons are green",
-                  "They all look the same",
-                  "The flasks are labeled based on their liquid content"],
+        text: `<strong>Question 1/4:</strong> To the <strong>Adventurer</strong>, how do the keys look?`,
+        options: ["The keys are the same color as the door(s) they unlock",
+          "They all look the same",
+          "The keys are labeled based on their what door they unlock"],
         answer: 1,
         exam: true
       },
       {
         text: `<strong>Question 1/4:</strong> To the <strong>knight</strong>, how do the flasks look?`,
-        options: ["The potions are purple and the poisons are green",
-                  "They all look the same",
-                  "The flasks are labeled based on their liquid content"],
+        options: ["The keys are the same color as the door(s) they unlock",
+          "They all look the same",
+          "The keys are labeled based on their what door they unlock"],
         answer: 1,
         feedback: true
       },
       {
         text: `<strong>Question 2/4:</strong> What is your task in this game?`,
-        options: ["Place the flasks in a logical and helpful manner to help the knight",
-                  "Control the knight to defeat the monster",
-                  "Guess the identity of the liquid in each flask"],
+        options: ["Place the keys in a logical and helpful manner to help the Adventurer",
+          "Control the Adventurer to collect the fruit",
+          "Guess the identity of the key-door pairs"],
         answer: 0,
         exam: true
       },
       {
         text: `<strong>Question 2/4:</strong> What is your task in this game?`,
-        options: ["Place the flasks in a logical and helpful manner to help the knight",
-                  "Control the knight to defeat the monster",
-                  "Guess the identity of the liquid in each flask"],
+        options: ["Place the keys in a logical and helpful manner to help the Adventurer",
+          "Control the Adventurer to collect the fruit",
+          "Guess the identity of the key-door pairs"],
         answer: 0,
         feedback: true
       },
       {
         text: `<strong>Question 3/4:</strong> Which of the following is true?`,
-        options: ["The player has <strong> no prior knowledge </strong> about the contents of each flask.",
-          "The player <strong> knows perfectly </strong> what's inside each flask.",
-          "The player <strong> might know exactly </strong> what's in each flask, but <strong> might also be unsure. </strong>"],
+        options: ["The player has <strong> no prior knowledge </strong> about what key unlocks which door.",
+          "The player <strong> knows perfectly </strong> what each key does.",
+          "The player <strong> might know exactly </strong> what keys do, but <strong> might also be unsure. </strong>"],
         answer: 0,
         exam: true
       },
       {
         text: `<strong>Question 3/4:</strong> Which of the following is true?`,
-        options: ["The player has <strong> no prior knowledge </strong> about the contents of each flask.",
-          "The player <strong> knows perfectly </strong> what's inside each flask.",
-          "The player <strong> might know exactly </strong> what's in each flask, but <strong> might also be unsure. </strong>"],
+        options: ["The player has <strong> no prior knowledge </strong> about what key unlocks which door.",
+          "The player <strong> knows perfectly </strong> what each key does.",
+          "The player <strong> might know exactly </strong> what keys do, but <strong> might also be unsure. </strong>"],
         answer: 0,
         feedback: true
       },
       {
         text: `<strong>Question 4/4:</strong> Which of the following is true?`,
-        options: ["You should place the flasks randomly and haphazardly.",
-                  "You should place the flasks so that the player can distinguish between potions and poisons",
-                  "The flasks are all potions."],
+        options: ["You should place the keys randomly and haphazardly.",
+          "You should place the keys so that the player can distinguish what they unlock",
+          "It does not matter where you place the keys."],
         answer: 1,
         exam: true
       },
       {
         text: `<strong>Question 4/4:</strong> Which of the following is true?`,
-        options: ["You should place the flasks randomly and haphazardly.",
-                  "You should place the flasks so that the player can distinguish between potions and poisons",
-                  "The flasks are all potions."],
+        options: ["You should place the keys randomly and haphazardly.",
+          "You should place the keys so that the player can distinguish what they unlock",
+          "It does not matter where you place the keys."],
         answer: 1,
         feedback: true
       },
@@ -533,7 +542,7 @@ experimentApp.controller('ExperimentController',
       {
         text: `Congratulations! You've finished the tutorial.
                <br><br>
-               You will now play the game for 12 different rounds.
+               You will now play the game for 20 different rounds.
                <br><br>
                Ready to start? Press <strong>Next</strong> to continue!`
       }
@@ -554,21 +563,41 @@ experimentApp.controller('ExperimentController',
         "name": "tutorial1",
         "gridSize": [3, 8],
         "trays": [
-          {row: 2, col: 0},
-          {row: 0, col: 5}
+          { row: 2, col: 0 },
+          { row: 0, col: 5 }
         ],
         "wallSquares": [
-          {row: 0, col: 6},
-          {row: 1, col: 6},
+          { row: 0, col: 6 },
+          { row: 1, col: 6 },
         ],
-        "doorSqaures": [
-          {row: 1, col: 7}
+        "doorSquares": [
+          { row: 1, col: 7 }
         ],
-        "fruit": {row: 0, col: 7},
-        "player": {row: 0, col: 0},
+        "fruit": [
+          { row: 0, col: 7 }
+        ],
+        "player": { row: 0, col: 0 },
         "keys": 1,
         "ground_truth": ["Unlocks Door 1"]
       },
+      // {
+      //   "name": "tutorial2",
+      //   "gridSize": [3, 8],
+      //   "trays": [
+      //     { row: 0, col: 5 }
+      //   ],
+      //   "wallSquares": [
+      //     { row: 0, col: 6 },
+      //     { row: 1, col: 6 }
+      //   ],
+      //   "doorSquares": [
+      //     { row: 1, col: 7 }
+      //   ],
+      //   "fruit": { row: 0, col: 7 },
+      //   "player": { row: 0, col: 0 },
+      //   "keys": 1,
+      //   "ground_truth": ["Unlocks Door 1"]
+      // },
     ]
 
     // Initialize grid
@@ -595,16 +624,31 @@ experimentApp.controller('ExperimentController',
             $scope.cell.classList.add('wall');
           }
 
-                    // Check if this cell is a wall square
-          $scope.isDoor = $scope.active_stim.doorSqaures.some(door => door.row === row && door.col === col);
+          // Check if this cell is a wall square
+          $scope.isDoor = $scope.active_stim.doorSquares.some(door => door.row === row && door.col === col);
           if ($scope.isDoor) {
             $scope.cell.classList.add('door');
+            $scope.active_stim.doorSquares.some((d, index) => {
+              if (d.row === row && d.col === col) {
+                $scope.png_id = $scope.door_img_url[index];
+                return;
+              }
+            });
+            $scope.blah = $scope.png_id;
+            $scope.cell.style.backgroundImage = `url('${$scope.png_id}')`;
           }
 
-          // Check if this cell is a monster
-          $scope.isMonster = $scope.active_stim.fruit.row === row && $scope.active_stim.fruit.col === col;
-          if ($scope.isMonster) {
-            $scope.cell.classList.add('monster');
+          // Check if this cell is a fruit
+          $scope.isFruit = $scope.active_stim.fruit.some(fruit => fruit.row === row && fruit.col === col);
+          if ($scope.isFruit) {
+            $scope.cell.classList.add('fruit');
+            $scope.active_stim.fruit.some((f, index) => {
+              if (f.row === row && f.col === col) {
+                $scope.png_id = $scope.fruit_img_url[index];
+                return;
+              }
+            });
+            $scope.cell.style.backgroundImage = `url('${$scope.png_id}')`;
           }
 
           // Check if this cell is a player
@@ -752,7 +796,7 @@ experimentApp.controller('ExperimentController',
 
     $scope.updateStatus = async function () {
       $scope.status = document.getElementById('status');
-      $scope.status.textContent = `${$scope.assignedCount}/${$scope.active_stim.keys} squares assigned`;
+      $scope.status.textContent = `${$scope.assignedCount}/${$scope.active_stim.keys} keys assigned`;
     }
 
     $scope.resetAssignments = function () {

@@ -455,8 +455,8 @@ h1 {
   border: 2px solid #000000;
 }
 
-.grid-cell.monster {
-  background-image: url("images/banana.png");
+.grid-cell.fruit {
+  background-image: url("images/fruitOne.png");
   background-size: contain;
 }
 
