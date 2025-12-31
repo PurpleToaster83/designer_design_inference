@@ -241,6 +241,20 @@ experimentApp.controller('ExperimentController',
       $scope.valid_comprehension = false;
       $scope.exam_response = "";
       $scope.valid_exam = false;
+
+      if ($scope.inst_id == $scope.instructions.length - 1) {
+        // Initialize stimuli section
+        $scope.section = "stimuli";
+        $scope.part_id = 0;
+        $scope.ratings = [];
+        $scope.anim_complete = true;
+
+        await $scope.set_belief_statements($scope.stim_id);
+
+        $timeout(function () {
+          $scope.initGridContainer();
+        }, 0);
+      }
     };
 
     $scope.advance_stimuli = async function () {
@@ -408,7 +422,7 @@ experimentApp.controller('ExperimentController',
     };
 
     $scope.stimuli_sets = [
-      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+      [0, 1, 2]
     ]
 
     $scope.stimuli_set_length = $scope.stimuli_sets[0].length;
@@ -474,7 +488,7 @@ experimentApp.controller('ExperimentController',
       {
         text: `<strong>Comprehension Questions</strong> <br>
                <br>
-               For the last part of the tutorial, we will ask 5 quick questions to check your understanding of the task.<br>
+               For the last part of the tutorial, we will ask 4 quick questions to check your understanding of the task.<br>
                <br>
                Answer <strong>all questions correctly</strong> in order to proceed to the main experiment.
                You can retake the quiz as many times as necessary.
@@ -572,7 +586,6 @@ experimentApp.controller('ExperimentController',
         "name": "tutorial1",
         "gridSize": [3, 8],
         "trays": [
-          { row: 2, col: 0 },
           { row: 0, col: 5 }
         ],
         "wallSquares": [
@@ -587,12 +600,13 @@ experimentApp.controller('ExperimentController',
         ],
         "player": { row: 0, col: 0 },
         "keys": 1,
-        "ground_truth": ["Unlocks Door 1"]
+        "ground_truth": ["Key A unlocks Door 1"]
       },
       {
         "name": "tutorial2",
         "gridSize": [3, 8],
         "trays": [
+          { row: 2, col: 0 },
           { row: 0, col: 5 }
         ],
         "wallSquares": [
@@ -607,10 +621,690 @@ experimentApp.controller('ExperimentController',
         ],
         "player": { row: 0, col: 0 },
         "keys": 1,
-        "ground_truth": ["Unlocks Door 1"]
+        "ground_truth": ["Key A unlocks Door 1"]
       },
+      {
+        "name": "1_3",
+        "gridSize": [8, 7],
+        "trays": [
+          { row: 1, col: 0 },
+          { row: 4, col: 6 },
+          { row: 7, col: 1 }
+        ],
+        "wallSquares": [
+          { row: 0, col: 6 },
+          { row: 1, col: 6 },
+          { row: 2, col: 6 },
+          { row: 3, col: 6 },
+          { row: 1, col: 1 },
+          { row: 2, col: 1 },
+          { row: 3, col: 1 },
+          { row: 1, col: 2 },
+          { row: 2, col: 2 },
+          { row: 3, col: 2 },
+          { row: 1, col: 3 },
+          { row: 2, col: 3 },
+          { row: 3, col: 3 },
+          { row: 1, col: 4 },
+          { row: 2, col: 4 },
+          { row: 3, col: 4 },
+          { row: 7, col: 3 },
+          { row: 7, col: 4 },
+          { row: 7, col: 5 },
+          { row: 7, col: 6 },
+          { row: 5, col: 1 },
+          { row: 5, col: 2 },
+          { row: 5, col: 3 },
+          { row: 5, col: 4 },
+          { row: 5, col: 5 },
+          { row: 5, col: 6 },
+        ],
+        "doorSquares": [
+          {row: 0, col: 2},
+          { row: 6, col: 4 }
+        ],
+        "fruit": [
+          { row: 1, col: 5 },
+          { row: 6, col: 6 }
+        ],
+        "player": { row: 6, col: 0 },
+        "keys": 2,
+        "ground_truth": ["Key A unlocks Nothing", "Key B unlocks Door 2"]
+      },
+    ]
 
-      //TODO: put all the maps here + fix load problem with initGridContainer()
+    $scope.stimuli = [
+      {
+        "name": "1_1",
+        "gridSize": [8, 7],
+        "trays": [
+          { row: 1, col: 0 },
+          { row: 4, col: 6 },
+          { row: 7, col: 1 }
+        ],
+        "wallSquares": [
+          { row: 0, col: 6 },
+          { row: 1, col: 6 },
+          { row: 2, col: 6 },
+          { row: 3, col: 6 },
+          { row: 1, col: 1 },
+          { row: 2, col: 1 },
+          { row: 3, col: 1 },
+          { row: 1, col: 2 },
+          { row: 2, col: 2 },
+          { row: 3, col: 2 },
+          { row: 1, col: 3 },
+          { row: 2, col: 3 },
+          { row: 3, col: 3 },
+          { row: 1, col: 4 },
+          { row: 2, col: 4 },
+          { row: 3, col: 4 },
+          { row: 7, col: 3 },
+          { row: 7, col: 4 },
+          { row: 7, col: 5 },
+          { row: 7, col: 6 },
+          { row: 5, col: 1 },
+          { row: 5, col: 2 },
+          { row: 5, col: 3 },
+          { row: 5, col: 4 },
+          { row: 5, col: 5 },
+          { row: 5, col: 6 },
+        ],
+        "doorSquares": [
+          { row: 2, col: 5 },
+          { row: 6, col: 4 }
+        ],
+        "fruit": [
+          { row: 1, col: 5 },
+          { row: 6, col: 6 }
+        ],
+        "player": { row: 6, col: 0 },
+        "keys": 2,
+        "ground_truth": ["Key A unlocks Nothing", "Key B unlocks Door 2"]
+      },
+      {
+        "name": "1_2",
+        "gridSize": [8, 7],
+        "trays": [
+          { row: 1, col: 0 },
+          { row: 4, col: 6 },
+          { row: 7, col: 1 }
+        ],
+        "wallSquares": [
+          { row: 0, col: 6 },
+          { row: 1, col: 6 },
+          { row: 2, col: 6 },
+          { row: 3, col: 6 },
+          { row: 1, col: 1 },
+          { row: 2, col: 1 },
+          { row: 3, col: 1 },
+          { row: 1, col: 2 },
+          { row: 2, col: 2 },
+          { row: 3, col: 2 },
+          { row: 1, col: 3 },
+          { row: 2, col: 3 },
+          { row: 3, col: 3 },
+          { row: 1, col: 4 },
+          { row: 2, col: 4 },
+          { row: 3, col: 4 },
+          { row: 7, col: 3 },
+          { row: 7, col: 4 },
+          { row: 7, col: 5 },
+          { row: 7, col: 6 },
+          { row: 5, col: 1 },
+          { row: 5, col: 2 },
+          { row: 5, col: 3 },
+          { row: 5, col: 4 },
+          { row: 5, col: 5 },
+          { row: 5, col: 6 },
+        ],
+        "doorSquares": [
+          {row: 0, col: 2},
+          { row: 2, col: 5 },
+          { row: 6, col: 4 }
+        ],
+        "fruit": [
+          { row: 1, col: 5 },
+          { row: 6, col: 6 }
+        ],
+        "player": { row: 6, col: 0 },
+        "keys": 2,
+        "ground_truth": ["Key A unlocks Door 1", "Key B unlocks Door 3"]
+      },
+      {
+        "name": "1_3",
+        "gridSize": [8, 7],
+        "trays": [
+          { row: 1, col: 0 },
+          { row: 4, col: 6 },
+          { row: 7, col: 1 }
+        ],
+        "wallSquares": [
+          { row: 0, col: 6 },
+          { row: 1, col: 6 },
+          { row: 2, col: 6 },
+          { row: 3, col: 6 },
+          { row: 1, col: 1 },
+          { row: 2, col: 1 },
+          { row: 3, col: 1 },
+          { row: 1, col: 2 },
+          { row: 2, col: 2 },
+          { row: 3, col: 2 },
+          { row: 1, col: 3 },
+          { row: 2, col: 3 },
+          { row: 3, col: 3 },
+          { row: 1, col: 4 },
+          { row: 2, col: 4 },
+          { row: 3, col: 4 },
+          { row: 7, col: 3 },
+          { row: 7, col: 4 },
+          { row: 7, col: 5 },
+          { row: 7, col: 6 },
+          { row: 5, col: 1 },
+          { row: 5, col: 2 },
+          { row: 5, col: 3 },
+          { row: 5, col: 4 },
+          { row: 5, col: 5 },
+          { row: 5, col: 6 },
+        ],
+        "doorSquares": [
+          {row: 0, col: 2},
+          { row: 6, col: 4 }
+        ],
+        "fruit": [
+          { row: 1, col: 5 },
+          { row: 6, col: 6 }
+        ],
+        "player": { row: 6, col: 0 },
+        "keys": 2,
+        "ground_truth": ["Key A unlocks Door Nothing", "Key B unlocks Door 2"]
+      },
+      {
+        "name": "1_4",
+        "gridSize": [8, 7],
+        "trays": [
+          { row: 1, col: 0 },
+          { row: 4, col: 6 },
+          { row: 7, col: 1 }
+        ],
+        "wallSquares": [
+          { row: 0, col: 6 },
+          { row: 1, col: 6 },
+          { row: 2, col: 6 },
+          { row: 3, col: 6 },
+          { row: 1, col: 1 },
+          { row: 2, col: 1 },
+          { row: 3, col: 1 },
+          { row: 1, col: 2 },
+          { row: 2, col: 2 },
+          { row: 3, col: 2 },
+          { row: 1, col: 3 },
+          { row: 2, col: 3 },
+          { row: 3, col: 3 },
+          { row: 1, col: 4 },
+          { row: 2, col: 4 },
+          { row: 3, col: 4 },
+          { row: 7, col: 3 },
+          { row: 7, col: 4 },
+          { row: 7, col: 5 },
+          { row: 7, col: 6 },
+          { row: 5, col: 1 },
+          { row: 5, col: 2 },
+          { row: 5, col: 3 },
+          { row: 5, col: 4 },
+          { row: 5, col: 5 },
+          { row: 5, col: 6 },
+        ],
+        "doorSquares": [
+          { row: 0, col: 2 },
+          {row: 2, col: 5},
+          { row: 6, col: 4 }
+        ],
+        "fruit": [
+          { row: 1, col: 5 },
+          { row: 6, col: 6 }
+        ],
+        "player": { row: 6, col: 0 },
+        "keys": 2,
+        "ground_truth": ["Key A unlocks Door 2", "Key B unlocks Door 3"]
+      },
+      {
+        "name": "2_1",
+        "gridSize": [5, 6],
+        "trays": [
+          { row: 2, col: 2 },
+          { row: 4, col: 0 }
+        ],
+        "wallSquares": [
+          { row: 0, col: 3 },
+          { row: 2, col: 3 },
+          { row: 4, col: 3 },
+          { row: 2, col: 4 },
+          {row: 2, col: 5}
+        ],
+        "doorSquares": [
+          { row: 1, col: 3 },
+          {row: 3, col: 3},
+        ],
+        "fruit": [
+          { row: 0, col: 5 },
+          { row: 4, col: 5 }
+        ],
+        "player": { row: 2, col: 0 },
+        "keys": 1,
+        "ground_truth": ["Key A unlocks Door 1"]
+      },
+      {
+        "name": "2_2",
+        "gridSize": [5, 6],
+        "trays": [
+          { row: 2, col: 2 },
+          { row: 0, col: 0 }
+        ],
+        "wallSquares": [
+          { row: 0, col: 3 },
+          { row: 2, col: 3 },
+          { row: 4, col: 3 },
+          { row: 2, col: 4 },
+          {row: 2, col: 5}
+        ],
+        "doorSquares": [
+          { row: 1, col: 3 },
+          {row: 3, col: 3},
+        ],
+        "fruit": [
+          { row: 0, col: 5 },
+          { row: 4, col: 5 }
+        ],
+        "player": { row: 2, col: 0 },
+        "keys": 1,
+        "ground_truth": ["Key A unlocks Door 2"]
+      },
+      {
+        "name": "2_3",
+        "gridSize": [5, 6],
+        "trays": [
+          { row: 2, col: 2 },
+          { row: 4, col: 0 }
+        ],
+        "wallSquares": [
+          { row: 0, col: 3 },
+          { row: 2, col: 3 },
+          { row: 4, col: 3 },
+          { row: 2, col: 4 },
+          {row: 2, col: 5}
+        ],
+        "doorSquares": [
+          { row: 1, col: 3 },
+          {row: 3, col: 3},
+        ],
+        "fruit": [
+          { row: 0, col: 5 },
+          { row: 4, col: 5 }
+        ],
+        "player": { row: 2, col: 0 },
+        "keys": 1,
+        "ground_truth": ["Key A unlocks Door 2"]
+      },
+      {
+        "name": "2_4",
+        "gridSize": [5, 6],
+        "trays": [
+          { row: 2, col: 2 },
+          { row: 4, col: 0 },
+          {row: 0, col: 0}
+        ],
+        "wallSquares": [
+          { row: 0, col: 3 },
+          { row: 2, col: 3 },
+          { row: 4, col: 3 },
+          { row: 2, col: 4 },
+          {row: 2, col: 5}
+        ],
+        "doorSquares": [
+          { row: 1, col: 3 },
+          {row: 3, col: 3},
+        ],
+        "fruit": [
+          { row: 0, col: 5 },
+          { row: 4, col: 5 }
+        ],
+        "player": { row: 2, col: 0 },
+        "keys": 1,
+        "ground_truth": ["Key A unlocks Door 1"]
+      },
+      {
+        "name": "3_1",
+        "gridSize": [5, 8],
+        "trays": [
+          { row: 2, col: 0 },
+          { row: 3, col: 2 },
+          {row: 3, col: 7}
+        ],
+        "wallSquares": [
+          { row: 1, col: 0 },
+          { row: 1, col: 2 },
+          { row: 1, col: 3 },
+          { row: 1, col: 4 },
+          { row: 1, col: 5 },
+          { row: 1, col: 6 },
+          { row: 3, col: 0 },
+          { row: 3, col: 1 },
+        ],
+        "doorSquares": [
+          { row: 1, col: 1 },
+          { row: 1, col: 7 },
+          {row: 4, col: 1}
+        ],
+        "fruit": [
+          { row: 0, col: 1 },
+          { row: 0, col: 7 },
+          {row: 4, col: 0}
+        ],
+        "player": { row: 4, col: 3 },
+        "keys": 2,
+        "ground_truth": ["Key A unlocks Door 1 and Door 3", "Key B unlocks Door 2"]
+      },
+      {
+        "name": "3_2",
+        "gridSize": [5, 8],
+        "trays": [
+          { row: 2, col: 0 },
+          { row: 3, col: 2 },
+          {row: 3, col: 7}
+        ],
+        "wallSquares": [
+          { row: 1, col: 0 },
+          { row: 1, col: 2 },
+          { row: 1, col: 3 },
+          { row: 1, col: 4 },
+          { row: 1, col: 5 },
+          { row: 1, col: 6 },
+          { row: 3, col: 0 },
+          { row: 3, col: 1 },
+        ],
+        "doorSquares": [
+          { row: 1, col: 1 },
+          { row: 1, col: 7 },
+          {row: 4, col: 1}
+        ],
+        "fruit": [
+          { row: 0, col: 1 },
+          { row: 0, col: 7 },
+          {row: 4, col: 0}
+        ],
+        "player": { row: 4, col: 3 },
+        "keys": 2,
+        "ground_truth": ["Key A unlocks Door 1", "Key B unlocks Door 3"]
+      },
+      {
+        "name": "3_3",
+        "gridSize": [6, 6],
+        "trays": [
+          { row: 0, col: 3 },
+          { row: 2, col: 4 },
+          { row: 5, col: 4 },
+          {row: 5, col: 0}
+        ],
+        "wallSquares": [
+          { row: 1, col: 0 },
+          { row: 1, col: 1 },
+          { row: 0, col: 4 },
+          { row: 1, col: 4 },
+        ],
+        "doorSquares": [
+          { row: 0, col: 1 },
+          { row: 1, col: 5 },
+        ],
+        "fruit": [
+          { row: 0, col: 0 },
+          { row: 0, col: 5 },
+        ],
+        "player": { row: 3, col: 2 },
+        "keys": 2,
+        "ground_truth": ["Key A unlocks Door 2", "Key B unlocks Nothing"]
+      },
+      {
+        "name": "3_4",
+        "gridSize": [6, 6],
+        "trays": [
+          { row: 0, col: 3 },
+          { row: 2, col: 4 },
+          { row: 5, col: 4 },
+          {row: 5, col: 0}
+        ],
+        "wallSquares": [
+          { row: 1, col: 0 },
+          { row: 1, col: 1 },
+          { row: 0, col: 4 },
+          { row: 1, col: 4 },
+        ],
+        "doorSquares": [
+          { row: 0, col: 1 },
+          { row: 1, col: 5 },
+        ],
+        "fruit": [
+          { row: 0, col: 0 },
+          { row: 0, col: 5 },
+        ],
+        "player": { row: 3, col: 2 },
+        "keys": 2,
+        "ground_truth": ["Key A unlocks Door 1", "Key B unlocks Nothing"]
+      },
+      {
+        "name": "4_1",
+        "gridSize": [5, 6],
+        "trays": [
+          { row: 2, col: 2 },
+          { row: 0, col: 0 }
+        ],
+        "wallSquares": [
+          { row: 1, col: 3 },
+          { row: 2, col: 3 },
+          { row: 3, col: 3 },
+          { row: 2, col: 4 },
+          {row: 2, col: 5}
+        ],
+        "doorSquares": [
+          { row: 0, col: 3 },
+          {row: 4, col: 3},
+        ],
+        "fruit": [
+          { row: 0, col: 5 },
+          { row: 4, col: 5 }
+        ],
+        "player": { row: 2, col: 0 },
+        "keys": 1,
+        "ground_truth": ["Key A unlocks Door 2"]
+      },
+      {
+        "name": "4_2",
+        "gridSize": [5, 6],
+        "trays": [
+          { row: 2, col: 2 },
+          { row: 4, col: 0 }
+        ],
+        "wallSquares": [
+          { row: 1, col: 3 },
+          { row: 2, col: 3 },
+          { row: 3, col: 3 },
+          { row: 2, col: 4 },
+          {row: 2, col: 5}
+        ],
+        "doorSquares": [
+          { row: 0, col: 3 },
+          {row: 4, col: 3},
+        ],
+        "fruit": [
+          { row: 0, col: 5 },
+          { row: 4, col: 5 }
+        ],
+        "player": { row: 2, col: 0 },
+        "keys": 1,
+        "ground_truth": ["Key A unlocks Door 1"]
+      },
+      {
+        "name": "4_3",
+        "gridSize": [6, 6],
+        "trays": [
+          { row: 0, col: 2 },
+          { row: 3, col: 2 },
+          { row: 3, col: 5 }
+        ],
+        "wallSquares": [
+          { row: 0, col: 4 },
+          { row: 1, col: 4 },
+          { row: 1, col: 0 },
+          { row: 1, col: 2},
+          { row: 1, col: 3 },
+          { row: 4, col: 1 },
+          { row: 5, col: 1 },
+        ],
+        "doorSquares": [
+          { row: 1, col: 1 },
+          { row: 1, col: 5 },
+          {row: 4, col: 0},
+        ],
+        "fruit": [
+          { row: 0, col: 5 },
+          { row: 5, col: 0 }
+        ],
+        "player": { row: 5, col: 4 },
+        "keys": 2,
+        "ground_truth": ["Key A unlocks Door 2 and Door 3", "Key B unlocks Door 1"]
+      },
+      {
+        "name": "4_4",
+        "gridSize": [6, 6],
+        "trays": [
+          { row: 0, col: 2 },
+          { row: 3, col: 2 },
+          { row: 3, col: 5 }
+        ],
+        "wallSquares": [
+          { row: 0, col: 4 },
+          { row: 1, col: 4 },
+          { row: 1, col: 0 },
+          { row: 1, col: 2},
+          { row: 1, col: 3 },
+          { row: 4, col: 1 },
+          { row: 5, col: 1 },
+        ],
+        "doorSquares": [
+          { row: 1, col: 1 },
+          { row: 1, col: 5 },
+          {row: 4, col: 0},
+        ],
+        "fruit": [
+          { row: 0, col: 5 },
+          { row: 5, col: 0 }
+        ],
+        "player": { row: 5, col: 4 },
+        "keys": 2,
+        "ground_truth": ["Key A unlocks Door 2 and Door 3", "Key B unlocks Door 1 and Door 3"]
+      },
+      {
+        "name": "5_1",
+        "gridSize": [5, 7],
+        "trays": [
+          { row: 3, col: 1 },
+          { row: 2, col: 3 },
+          { row: 3, col: 5 }
+        ],
+        "wallSquares": [
+          { row: 3, col: 2 },
+          { row: 3, col: 3 },
+          { row: 3, col: 4 },
+        ],
+        "doorSquares": [
+          { row: 4, col: 2 },
+          { row: 4, col: 4 },
+        ],
+        "fruit": [
+          { row: 4, col: 3 },
+        ],
+        "player": { row: 0, col: 3 },
+        "keys": 2,
+        "ground_truth": ["Key A unlocks Nothing", "Key B unlocks Door 2"]
+      },
+      {
+        "name": "5_2",
+        "gridSize": [5, 7],
+        "trays": [
+          { row: 3, col: 1 },
+          { row: 2, col: 3 },
+          { row: 3, col: 5 }
+        ],
+        "wallSquares": [
+          { row: 3, col: 2 },
+          { row: 3, col: 3 },
+          { row: 3, col: 4 },
+        ],
+        "doorSquares": [
+          { row: 4, col: 2 },
+          { row: 4, col: 4 },
+        ],
+        "fruit": [
+          { row: 4, col: 3 },
+        ],
+        "player": { row: 0, col: 3 },
+        "keys": 2,
+        "ground_truth": ["Key A unlocks Nothing", "Key B unlocks Door 1"]
+      },
+      {
+        "name": "5_3",
+        "gridSize": [5, 6],
+        "trays": [
+          { row: 0, col: 4 },
+          { row: 3, col: 3 },
+        ],
+        "wallSquares": [
+          { row: 2, col: 0 },
+          { row: 2, col: 2 },
+          { row: 2, col: 3 },
+          { row: 2, col: 4 },
+          { row: 0, col: 3 },
+          { row: 1, col: 3 },
+        ],
+        "doorSquares": [
+          { row: 2, col: 1 },
+          { row: 2, col: 5 },
+        ],
+        "fruit": [
+          { row: 0, col: 1 },
+        ],
+        "player": { row: 4, col: 1 },
+        "keys": 2,
+        "ground_truth": ["Key A unlocks Door 1", "Key B unlocks Door 2"]
+      },
+      {
+        "name": "5_4",
+        "gridSize": [5, 6],
+        "trays": [
+          { row: 0, col: 4 },
+          { row: 3, col: 2 },
+          { row: 4, col: 5 },
+        ],
+        "wallSquares": [
+          { row: 2, col: 0 },
+          { row: 2, col: 2 },
+          { row: 2, col: 3 },
+          { row: 2, col: 4 },
+          { row: 0, col: 3 },
+          { row: 1, col: 3 },
+          { row: 3, col: 3}
+        ],
+        "doorSquares": [
+          { row: 2, col: 1 },
+          { row: 2, col: 5 },
+        ],
+        "fruit": [
+          { row: 0, col: 1 },
+        ],
+        "player": { row: 4, col: 0 },
+        "keys": 2,
+        "ground_truth": ["Key A unlocks Door 1", "Key B unlocks Door 2"]
+      }
     ]
 
     // Initialize grid
