@@ -103,10 +103,10 @@
                   (section == 'instructions' && (inst_id == 2 || inst_id == 3)) ||
                   (!hide_questions() && has_belief_question()) || 
                   end_id == 2"
-          ng-disabled="section == 'endscreen' ||
+          ng-disabled="(section == 'endscreen' && end_id == 2) ||
             (valid_belief == false && has_belief_question() && !hide_questions()) ||
             (valid_exam == false && section == 'instructions' && is_exam()) ||
-            (valid_comprehension == false && section == 'instructions' && instruction_has_question())">
+            (valid_comprehension == false && section == 'instructions' && instruction_has_question()) ">
           Next&ensp;►
         </button>
       </div>
