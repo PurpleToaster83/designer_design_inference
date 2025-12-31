@@ -622,55 +622,7 @@ experimentApp.controller('ExperimentController',
         "player": { row: 0, col: 0 },
         "keys": 1,
         "ground_truth": ["Key A unlocks Door 1"]
-      },
-      {
-        "name": "1_3",
-        "gridSize": [8, 7],
-        "trays": [
-          { row: 1, col: 0 },
-          { row: 4, col: 6 },
-          { row: 7, col: 1 }
-        ],
-        "wallSquares": [
-          { row: 0, col: 6 },
-          { row: 1, col: 6 },
-          { row: 2, col: 6 },
-          { row: 3, col: 6 },
-          { row: 1, col: 1 },
-          { row: 2, col: 1 },
-          { row: 3, col: 1 },
-          { row: 1, col: 2 },
-          { row: 2, col: 2 },
-          { row: 3, col: 2 },
-          { row: 1, col: 3 },
-          { row: 2, col: 3 },
-          { row: 3, col: 3 },
-          { row: 1, col: 4 },
-          { row: 2, col: 4 },
-          { row: 3, col: 4 },
-          { row: 7, col: 3 },
-          { row: 7, col: 4 },
-          { row: 7, col: 5 },
-          { row: 7, col: 6 },
-          { row: 5, col: 1 },
-          { row: 5, col: 2 },
-          { row: 5, col: 3 },
-          { row: 5, col: 4 },
-          { row: 5, col: 5 },
-          { row: 5, col: 6 },
-        ],
-        "doorSquares": [
-          {row: 0, col: 2},
-          { row: 6, col: 4 }
-        ],
-        "fruit": [
-          { row: 1, col: 5 },
-          { row: 6, col: 6 }
-        ],
-        "player": { row: 6, col: 0 },
-        "keys": 2,
-        "ground_truth": ["Key A unlocks Nothing", "Key B unlocks Door 2"]
-      },
+      }
     ]
 
     $scope.stimuli = [
