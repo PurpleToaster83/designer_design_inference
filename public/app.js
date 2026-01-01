@@ -422,7 +422,8 @@ experimentApp.controller('ExperimentController',
     };
 
     $scope.stimuli_sets = [
-      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+      [0]
+      // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
     ]
 
     $scope.stimuli_set_length = $scope.stimuli_sets[0].length;
@@ -478,8 +479,8 @@ experimentApp.controller('ExperimentController',
         tutorial: true,
         show_questions: true,
         question_types: ["beliefs"],
-        statements: ["Flask <strong>A</strong> is: ",
-          "Flask <strong>B</strong> is:"],
+        statements: ["Key <strong>A</strong> unlocks: ",
+          "Key <strong>B</strong> unclocks:"],
         image: "images/key.png",
       },
       {
@@ -503,7 +504,7 @@ experimentApp.controller('ExperimentController',
         exam: true
       },
       {
-        text: `<strong>Question 1/4:</strong> To the <strong>knight</strong>, how do the flasks look?`,
+        text: `<strong>Question 1/4:</strong> To the <strong>Adventurer</strong>, how do the keys look?`,
         options: ["The keys are the same color as the door(s) they unlock",
           "They all look the same",
           "The keys are labeled based on their what door they unlock"],
@@ -1338,12 +1339,12 @@ experimentApp.controller('ExperimentController',
       }
     };
 
-    // Initialize flasks
-    $scope.initializeFlasks = async function () {
-      $scope.flasks = document.querySelectorAll('.flask');
-      $scope.flasks.forEach(flask => {
-        flask.addEventListener('dragstart', $scope.handleDragStart);
-        flask.addEventListener('dragend', $scope.handleDragEnd);
+    // Initialize keys
+    $scope.initializeKeys = async function () {
+      $scope.keys = document.querySelectorAll('.key');
+      $scope.keys.forEach(key => {
+        key.addEventListener('dragstart', $scope.handleDragStart);
+        key.addEventListener('dragend', $scope.handleDragEnd);
       });
     }
 
@@ -1354,7 +1355,7 @@ experimentApp.controller('ExperimentController',
         return;
       }
       
-      e.dataTransfer.setData('text/plain', e.target.dataset.flask);
+      e.dataTransfer.setData('text/plain', e.target.dataset.key);
       e.target.classList.add('dragging');
     }
 
@@ -1372,7 +1373,7 @@ experimentApp.controller('ExperimentController',
       if (e.currentTarget.classList.contains('occupied')) {
         $scope.row = parseInt(e.currentTarget.dataset.row);
         $scope.col = parseInt(e.currentTarget.dataset.col);
-        $scope.removeFlask($scope.row, $scope.col);
+        $scope.removeKey($scope.row, $scope.col);
         $scope.$apply(); // Trigger Angular digest cycle since this is a DOM event
       }
     };
@@ -1395,56 +1396,57 @@ experimentApp.controller('ExperimentController',
         return;
       }
       
-      $scope.flaskType = e.dataTransfer.getData('text/plain');
+      $scope.keyType = e.dataTransfer.getData('text/plain');
       $scope.row = parseInt(e.currentTarget.dataset.row);
       $scope.col = parseInt(e.currentTarget.dataset.col);
       
-      $scope.assignFlask($scope.flaskType, $scope.row, $scope.col);
+      $scope.assignKey($scope.keyType, $scope.row, $scope.col);
     }
 
-    $scope.assignFlask = function (flaskType, row, col) {
+    $scope.assignKey = function (keyType, row, col) {
       $scope.cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
-      $scope.flask = document.querySelector(`[data-flask="${flaskType}"]`);
+      $scope.key = document.querySelector(`[data-key="${keyType}"]`);
       
-      if (!$scope.cell || !$scope.flask || $scope.flask.classList.contains('assigned')) return;
+      if (!$scope.cell || !$scope.key || $scope.key.classList.contains('assigned')) return;
       
-      // Create flask in grid
-      $scope.flaskInGrid = document.createElement('div');
-      $scope.flaskInGrid.className = `flask-in-grid ${flaskType.split('-')[0]}`;
-      $scope.index = (Array.from(document.getElementById('flasks-container').children)).indexOf($scope.flask);
-      $scope.flaskInGrid.style.backgroundImage = `url('${$scope.img_url[$scope.index]}')`;
-      $scope.flaskInGrid.dataset.flask = flaskType;
-      $scope.flaskInGrid.textContent = $scope.flask.textContent;
+      // Create key in grid
+      $scope.keyInGrid = document.createElement('div');
+      $scope.keyInGrid.className = `key-in-grid ${keyType.split('-')[0]}`;
+      $scope.index = (Array.from(document.getElementById('keys-container').children)).indexOf($scope.key);
+      $scope.keyInGrid.style.backgroundImage = `url('${$scope.img_url[$scope.index]}')`;
+      $scope.keyInGrid.dataset.key = keyType;
+      $scope.keyInGrid.textContent = $scope.key.textContent;
       
-      $scope.cell.appendChild($scope.flaskInGrid);
+      $scope.cell.appendChild($scope.keyInGrid);
       $scope.cell.classList.add('occupied');
       
-      // Mark original flask as assigned
-      $scope.flask.classList.add('assigned');
+      // Mark original key as assigned
+      $scope.key.classList.add('assigned');
       
       // Track assignment
-      $scope.assignments[`${row}-${col}`] = flaskType;
+      const letters = ["A", "B"];
+      $scope.assignments[`${row}-${col}`] = letters[keyType];
       $scope.assignedCount++;
       
       $scope.updateStatus();
     }
 
-    $scope.removeFlask = function (row, col) {
+    $scope.removeKey = function (row, col) {
       $scope.cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
-      $scope.flaskInGrid = $scope.cell.querySelector('.flask-in-grid');
+      $scope.keyInGrid = $scope.cell.querySelector('.key-in-grid');
       
-      if (!$scope.flaskInGrid) return;
+      if (!$scope.keyInGrid) return;
       
-      $scope.flaskType = $scope.flaskInGrid.dataset.flask;
-      $scope.originalFlask = document.querySelector(`.flask[data-flask="${$scope.flaskType}"]`);
+      $scope.keyType = $scope.keyInGrid.dataset.key;
+      $scope.originalKey = document.querySelector(`.key[data-key="${$scope.keyType}"]`);
       
       // Remove from grid
-      $scope.flaskInGrid.remove();
+      $scope.keyInGrid.remove();
       $scope.cell.classList.remove('occupied');
       
-      // Restore original flask
-      if ($scope.originalFlask) {
-        $scope.originalFlask.classList.remove('assigned');
+      // Restore original key
+      if ($scope.originalKey) {
+        $scope.originalKey.classList.remove('assigned');
       }
       
       // Remove from assignments
@@ -1462,7 +1464,7 @@ experimentApp.controller('ExperimentController',
       // Clear all assignments
       Object.keys($scope.assignments).forEach(key => {
         const [row, col] = key.split('-').map(Number);
-        $scope.removeFlask(row, col);
+        $scope.removeKey(row, col);
       });
     }
 
@@ -1498,21 +1500,19 @@ experimentApp.controller('ExperimentController',
       }
 
       $scope.initializeGrid();
-      $scope.generateFlasks();
-      $scope.initializeFlasks();
+      $scope.generateKeys();
+      $scope.initializeKeys();
       $scope.updateStatus();
     }
 
-    $scope.generateFlasks = function() {
-      $scope.flasksContainer = document.getElementById('flasks-container');
-      if (!$scope.flasksContainer) return;
+    $scope.generateKeys = function() {
+      $scope.keysContainer = document.getElementById('keys-container');
+      if (!$scope.keysContainer) return;
       
-      // Clear existing flasks
-      $scope.flasksContainer.innerHTML = '';
+      // Clear existing keys
+      $scope.keysContainer.innerHTML = '';
       
-      const letters = ["A", "B", "C", "D"];
-
-      // Generate flasks based on the array
+      // Generate keys based on the array
       // Get fresh reference to statement container
       var statementContainer = document.getElementById('statement-container');
       if (statementContainer) {
@@ -1520,14 +1520,14 @@ experimentApp.controller('ExperimentController',
       }
       
       for (index = 0; index < $scope.active_stim.keys; index++) {
-        $scope.flask = document.createElement('div');
+        $scope.key = document.createElement('div');
 
-        $scope.flask.className = `flask`;
-        $scope.flask.style.backgroundImage = `url('${$scope.img_url[index]}')`;
-        $scope.flask.draggable = true;
-        $scope.flask.dataset.flask = `${index}`;
+        $scope.key.className = `key`;
+        $scope.key.style.backgroundImage = `url('${$scope.img_url[index]}')`;
+        $scope.key.draggable = true;
+        $scope.key.dataset.key = `${index}`;
         
-        $scope.flasksContainer.appendChild($scope.flask);
+        $scope.keysContainer.appendChild($scope.key);
 
         if (statementContainer) {
           $scope.truth = document.createElement('div');
@@ -1536,8 +1536,8 @@ experimentApp.controller('ExperimentController',
           statementContainer.appendChild($scope.truth);
         }
       }
-      // Reinitialize flask event listeners
-      $scope.initializeFlasks();
+      // Reinitialize keys event listeners
+      $scope.initializeKeys();
     };
   }
 )

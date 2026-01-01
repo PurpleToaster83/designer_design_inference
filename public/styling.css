@@ -287,7 +287,7 @@ h1 {
   display: flex;
 }
 
-.flask-info h2 {
+.keys-info h2 {
     color: #333;
     margin-bottom: 20px;
     font-size: 1.2em;
@@ -295,7 +295,7 @@ h1 {
     transform: translateX(60%);
 }
 
-.flasks-container {
+.keys-container {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -319,7 +319,7 @@ h1 {
   margin-top: 70px;
 }
 
-.flask {
+.key {
     width: 60px;
     height: 80px;
     background-size: contain;
@@ -334,22 +334,22 @@ h1 {
     justify-content: center;
 }
 
-.flask:active {
+.key:active {
     cursor: grabbing;
     transform: scale(1.1);
 }
 
-.flask.dragging {
+.key.dragging {
     opacity: 0.7;
     transform: scale(1.1);
     z-index: 1000;
 }
 
-.flask {
+.key {
     background-image: url('images/potionA.png');
 }
 
-.flask.assigned {
+.key.assigned {
     opacity: 0.3;
     cursor: not-allowed;
 }
@@ -412,7 +412,7 @@ h1 {
     transform: translateX(60px);
 }
 
-.flask-in-grid {
+.key-in-grid {
     width: 50px;
     height: 50px;
     background-size: contain;
@@ -429,7 +429,7 @@ h1 {
     opacity: 0.3;
 }
 
-.flask-in-grid:hover {
+.key-in-grid:hover {
     transform: scale(1.1);
 }
 
