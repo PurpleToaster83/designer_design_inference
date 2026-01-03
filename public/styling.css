@@ -453,13 +453,11 @@ h1 {
 }
 
 .grid-cell.door {
-  background-image: url("images/door.png");
   background-size: contain;
   border: 2px solid #000000;
 }
 
 .grid-cell.fruit {
-  background-image: url("images/fruitOne.png");
   background-size: contain;
 }
 
