@@ -454,10 +454,10 @@ experimentApp.controller('ExperimentController',
               <li> There could be more purple trays than keys.</li>
               <li> You may reset the active map at any time using the <strongreset</strong> button.</li>
               <li> Once you have finished designing a map, press the <strong>submit</strong> button.</li>
-              <li> The player <strong>does not</strong> know what each key does.</li>
+              <li> The Adventurer <strong>does not</strong> know what each key does.</li>
               </ul>
-              Your task is to place the keys in a location that you think will be <strong>helpful and logical</strong> to the player so that they can unlock the cooresponding door for <strong>each</strong> key
-              based on the player being rational.<br>
+              Your task is to place the keys in a location that you think will be <strong>helpful and logical</strong> to the Adventurer so that they can unlock the cooresponding door for <strong>each</strong> key
+              based on the Adventurer being rational.<br>
               <br>
               Press the <strong>Next</strong> button to continue.
               `,
@@ -474,7 +474,7 @@ experimentApp.controller('ExperimentController',
         image: "images/key.png",
       },
       {
-        text: `Now take a look at this new game level. Notice that now there is only one purple tray. Please place the key appropriatly to help the Adventurer.<br>
+        text: `Now take a look at this new game level. Notice that now there are two purple trays. Please place the key appropriatly to help the Adventurer.<br>
               <br>
               press the <strong>submit</strong> button when you have finished`,
         tutorial: true,
@@ -530,24 +530,24 @@ experimentApp.controller('ExperimentController',
       },
       {
         text: `<strong>Question 3/4:</strong> Which of the following is true?`,
-        options: ["The player has <strong> no prior knowledge </strong> about what key unlocks which door.",
-          "The player <strong> knows perfectly </strong> what each key does.",
-          "The player <strong> might know exactly </strong> what keys do, but <strong> might also be unsure. </strong>"],
+        options: ["The Adventurer has <strong> no prior knowledge </strong> about what key unlocks which door.",
+          "The Adventurer <strong> knows perfectly </strong> what each key does.",
+          "The Adventurer <strong> might know exactly </strong> what keys do, but <strong> might also be unsure. </strong>"],
         answer: 0,
         exam: true
       },
       {
         text: `<strong>Question 3/4:</strong> Which of the following is true?`,
-        options: ["The player has <strong> no prior knowledge </strong> about what key unlocks which door.",
-          "The player <strong> knows perfectly </strong> what each key does.",
-          "The player <strong> might know exactly </strong> what keys do, but <strong> might also be unsure. </strong>"],
+        options: ["The Adventurer has <strong> no prior knowledge </strong> about what key unlocks which door.",
+          "The Adventurer <strong> knows perfectly </strong> what each key does.",
+          "The Adventurer <strong> might know exactly </strong> what keys do, but <strong> might also be unsure. </strong>"],
         answer: 0,
         feedback: true
       },
       {
         text: `<strong>Question 4/4:</strong> Which of the following is true?`,
         options: ["You should place the keys randomly and haphazardly.",
-          "You should place the keys so that the player can distinguish what they unlock",
+          "You should place the keys so that the Adventurer can distinguish what they unlock",
           "It does not matter where you place the keys."],
         answer: 1,
         exam: true
@@ -555,7 +555,7 @@ experimentApp.controller('ExperimentController',
       {
         text: `<strong>Question 4/4:</strong> Which of the following is true?`,
         options: ["You should place the keys randomly and haphazardly.",
-          "You should place the keys so that the player can distinguish what they unlock",
+          "You should place the keys so that the Adventurer can distinguish what they unlock",
           "It does not matter where you place the keys."],
         answer: 1,
         feedback: true
