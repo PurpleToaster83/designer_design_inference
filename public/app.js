@@ -687,7 +687,7 @@ experimentApp.controller('ExperimentController',
         "ground_truth": ["Key A unlocks Door 2"]
       },
       {
-        "name": "01_5",
+        "name": "01_3",
         "gridSize": [7, 7],
         "trays": [
           { row: 0, col: 0 },
@@ -774,7 +774,7 @@ experimentApp.controller('ExperimentController',
         "ground_truth": ["Key A unlocks Door 2"]
       },
       {
-        "name": "02_5",
+        "name": "02_3",
         "gridSize": [7, 7],
         "trays": [
           { row: 6, col: 0 },
@@ -899,7 +899,7 @@ experimentApp.controller('ExperimentController',
         "ground_truth": ["Key A unlocks Door 2"]
       },
       {
-        "name": "03_5",
+        "name": "03_3",
         "gridSize": [8, 7],
         "trays": [
           { row: 1, col: 0 },
@@ -1043,7 +1043,7 @@ experimentApp.controller('ExperimentController',
         "ground_truth": ["Key A unlocks Door 2"]
       },
       {
-        "name": "04_5",
+        "name": "04_3",
         "gridSize": [8, 7],
         "trays": [
           { row: 1, col: 0 },
@@ -1191,7 +1191,7 @@ experimentApp.controller('ExperimentController',
         "ground_truth": ["Key A unlocks Door 2"]
       },
       {
-        "name": "05_5",
+        "name": "05_3",
         "gridSize": [8, 7],
         "trays": [
           { row: 1, col: 0 },
@@ -1297,7 +1297,7 @@ experimentApp.controller('ExperimentController',
         "ground_truth": ["Key A unlocks Door 2"]
       },
       {
-        "name": "06_5",
+        "name": "06_3",
         "gridSize": [6, 6],
         "trays": [
           { row: 1, col: 3 },
@@ -1381,7 +1381,7 @@ experimentApp.controller('ExperimentController',
         "ground_truth": ["Key A unlocks Door 2"]
       },
       {
-        "name": "07_5",
+        "name": "07_3",
         "gridSize": [6, 6],
         "trays": [
           { row: 1, col: 3 },
@@ -1489,7 +1489,7 @@ experimentApp.controller('ExperimentController',
         "ground_truth": ["Key A unlocks Door 2"]
       },
       {
-        "name": "08_5",
+        "name": "08_3",
         "gridSize": [6, 7],
         "trays": [
           { row: 1, col: 3 },
@@ -1609,7 +1609,7 @@ experimentApp.controller('ExperimentController',
         "ground_truth": ["Key A unlocks Door 2"]
       },
       {
-        "name": "09_5",
+        "name": "09_3",
         "gridSize": [6, 7],
         "trays": [
           { row: 1, col: 3 },
@@ -1731,7 +1731,7 @@ experimentApp.controller('ExperimentController',
         "ground_truth": ["Key A unlocks Door 2"]
       },
       {
-        "name": "10_5",
+        "name": "10_3",
         "gridSize": [6, 7],
         "trays": [
           { row: 1, col: 3 },
