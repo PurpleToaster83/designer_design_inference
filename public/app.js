@@ -100,7 +100,9 @@ experimentApp.controller('ExperimentController',
     }
     
     $scope.increment_counter = function () {
-      counterRef.child(counterKey).set($scope.user_count + 1);
+      counterRef.child(counterKey).transaction(function(currentValue) {
+        return (currentValue || 0) + 1;
+      });
     }
 
     $scope.validate_answer = function (ans) {
