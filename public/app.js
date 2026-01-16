@@ -564,7 +564,7 @@ experimentApp.controller('ExperimentController',
       },
       {
         exam_end: true,
-        exam_start_id: 11
+        exam_start_id: 6
       },
       {
         text: `Congratulations! You've finished the tutorial.
