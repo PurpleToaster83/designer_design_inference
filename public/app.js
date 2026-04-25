@@ -61,8 +61,7 @@ experimentApp.controller('ExperimentController',
     ];
     $scope.door_img_url = [
       "images/doorOne.png",
-      "images/doorTwo.png",
-      "images/doorThree.png",
+      "images/doorTwo.png"
     ]
     $scope.fruit_img_url = [
       "images/fruitOne.png",
@@ -89,19 +88,20 @@ experimentApp.controller('ExperimentController',
     }
 
     $scope.get_counter = async function () {
-      if ($location.search().local == "true") {
-        let max = $scope.stimuli_sets.length
-        return Math.floor(Math.random() * max);
-      } else {
-        return counterRef.child(counterKey).once("value", function (snapshot) {
-          $scope.user_count = snapshot.val();
-        }).then(() => { return $scope.user_count; });
-      }
-    }
-    
-    $scope.increment_counter = function () {
-      counterRef.child(counterKey).transaction(function(currentValue) {
-        return (currentValue || 0) + 1;
+      return new Promise((resolve, reject) => {
+        counterRef.child(counterKey).transaction(
+          function(currentValue) {
+            // This runs atomically - no other code can run between read and write
+            return (currentValue || 0) + 1;  // Increment immediately
+          },
+          function(error, committed, snapshot) {
+            if (!error && committed) {
+              // Return the OLD value (before increment) for this participant
+              let assignedCount = (snapshot.val() || 1) - 1;
+              resolve(assignedCount);
+            }
+          }
+        );
       });
     }
 
@@ -161,7 +161,6 @@ experimentApp.controller('ExperimentController',
             feedback: $scope.feedback_q.value
           }
           $scope.data.demographic_survey = $scope.survey;
-          $scope.increment_counter();
           $scope.store_to_db($scope.user_id, $scope.data);
         }
       }
